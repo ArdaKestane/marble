@@ -1,5 +1,11 @@
 <template>
   <div
+    v-if="loading"
+    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+  >
+    <Loading />
+  </div>
+  <div
     class="flex py-10 px-10 flex-col xl:flex-row lg:flex-row md:flex-col sm:flex-col align-center justify-center"
   >
     <div
@@ -58,6 +64,7 @@ export default {
   methods: {
     async fetchData() {
       try {
+        this.loading = true;
         const response = await AboutUsService.getAboutUs();
         const { id, base64File, description, headerText } = response.data;
 

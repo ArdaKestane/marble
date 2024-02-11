@@ -1,4 +1,10 @@
 <template>
+  <div
+    v-if="loading"
+    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+  >
+    <Loading />
+  </div>
   <div class="z-49 h-[91vh] overflow-hidden relative">
     <carousel :items-to-show="1">
       <slide v-for="(item, index) in carouselData" :key="index">
@@ -36,7 +42,6 @@ export default {
   components: {
     Carousel,
     Slide,
-
     Navigation,
     ChevronLeftOutlined,
     ChevronRightOutlined,
@@ -44,6 +49,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       carouselData: [],
       selectedLanguage: localStorage.getItem('selectedLanguage'),
     };
@@ -54,8 +60,10 @@ export default {
   methods: {
     async fetchData() {
       try {
+        this.loading = true;
         const response = await HomeService.getItems();
         this.carouselData = response.data;
+        this.loading = false;
       } catch (error) {
         console.error('Error fetching carousel data:', error);
       }
