@@ -15,15 +15,17 @@
       <div
         class="flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center justify-between space-x-0 sm:space-x-5 md:space-x-32 lg:space-x-48 xl:space-x-80"
       >
-        <div class="text-center w-full sm:w-auto mb-4 sm:mb-0">
+        <div class="text-center w-full text-black sm:w-auto mb-4 sm:mb-0">
           <p>{{ contactLabel }}</p>
           <p>{{ companyEMail }}</p>
         </div>
-        <div class="text-center w-full sm:w-auto mb-4 sm:mb-0 sm:order-3">
+        <div
+          class="text-center w-full text-black sm:w-auto mb-4 sm:mb-0 sm:order-3"
+        >
           <p>{{ detailsLabel }}</p>
           <p>{{ companyPhoneNumber }}</p>
         </div>
-        <div class="text-center w-full sm:w-auto sm:order-2">
+        <div class="text-center w-full text-black sm:w-auto sm:order-2">
           <p>© Copyright 2023 Marble Company</p>
           <p>{{ allRightsReservedLabel }}</p>
         </div>
