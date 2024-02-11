@@ -2,7 +2,6 @@
   <div
     class="relative"
     :class="{
-      'rounded-t-3xl': isModule,
       'border-b-2 border-white': drawerOpen,
     }"
   >
@@ -10,13 +9,7 @@
       class="relative flex justify-between items-center bg-opacity-10 bg-repeat z-50 w-full py-2 px-5"
     >
       <div class="flex items-center">
-        <img
-          v-if="isModule"
-          :src="'data:image/jpeg;base64,' + headerSource"
-          alt="Logo"
-          class="w-12 sm:w-12 md:w-16 lg:w-20 xl:w-24 font-noto mx-5"
-        />
-        <router-link v-else to="/" @click="scrollToTop">
+        <router-link to="/" @click="scrollToTop">
           <img
             :src="'data:image/jpeg;base64,' + headerSource"
             alt="Logo"

@@ -91,14 +91,14 @@
           </li>
           <li class="mb-2">
             <router-link
-              to="/dashboard/users"
+              to="/dashboard-footer"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
               <AccountGroup :size="40" fillColor="#2b4c65" />
               <p
                 class="font-semibold"
                 :class="{
-                  'text-fifth font-bold': isRouteActive('/dashboard/users'),
+                  'text-fifth font-bold': isRouteActive('/dashboard-footer'),
                 }"
               >
                 Footer

@@ -8,8 +8,8 @@ import DashboardHome from '../views/Dashboard/DashboardHome.vue';
 import DashboardTopProducts from '../views/Dashboard/DashboardTopProduct.vue';
 import DashboardProducts from '../views/Dashboard/DashboardProducts.vue';
 import DashboardAboutUs from '../views/Dashboard/DashboardAboutUs.vue';
+import DashboardFooter from '../views/Dashboard/DashboardFooter.vue';
 // import DashboardContact from '../views/Dashboard/DashboardContact.vue';
-// import DashboardFooter from '../views/DashboardFooter.vue';
 // import DashboardTimeline from '../views/DashboardTimeline.vue';
 
 const routes = [
@@ -59,16 +59,15 @@ const routes = [
     name: 'DashboardAboutUs',
     component: DashboardAboutUs,
   },
+  {
+    path: '/dashboard-footer',
+    name: 'DashboardFooter',
+    component: DashboardFooter,
+  },
   // {
   //   path: '/dashboard-contact',
   //   name: 'DashboardContact',
   //   component: DashboardContact,
-  // },
-
-  // {
-  //   path: '/dashboard-footer',
-  //   name: 'DashboardFooter',
-  //   component: DashboardFooter,
   // },
 
   // {

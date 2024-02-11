@@ -4,18 +4,22 @@
       :center="center"
       :zoom="7"
       map-type-id="terrain"
-      style="width: 100%; height: 100%; min-width: 300px; min-height: 500px; max-height: 750px;"
+      style="
+        width: 100%;
+        height: 100%;
+        min-width: 300px;
+        min-height: 500px;
+        max-height: 750px;
+      "
     >
-      <GMapCluster>
-        <GMapMarker
-          :key="index"
-          v-for="(location, index) in locations"
-          :position="{ lat: location.y, lng: location.x }"
-          :clickable="true"
-          :draggable="true"
-          @click="center = { lat: location.y, lng: location.x }"
-        />
-      </GMapCluster>
+      <GMapMarker
+        :key="index"
+        v-for="(location, index) in locations"
+        :position="{ lat: location.y, lng: location.x }"
+        :clickable="true"
+        :draggable="true"
+        @click="center = { lat: location.y, lng: location.x }"
+      />
     </GMapMap>
   </div>
 </template>
