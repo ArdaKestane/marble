@@ -4,7 +4,7 @@
       :center="center"
       :zoom="7"
       map-type-id="terrain"
-      style="width: 100%; height: 100%"
+      style="width: 100%; height: 100%; min-width: 300px; min-height: 500px; max-height: 750px;"
     >
       <GMapCluster>
         <GMapMarker
