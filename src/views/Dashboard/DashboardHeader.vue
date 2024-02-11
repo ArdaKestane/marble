@@ -171,6 +171,11 @@ export default {
 
     editHeaderMethod() {
       this.editModalVisible = true;
+      this.editHeader = {
+        headerText: this.header.headerText,
+        color: this.header.color,
+        base64File: this.header.base64File,
+      };
     },
 
     handleFileChange(event) {
@@ -192,7 +197,7 @@ export default {
         color: this.editHeader.color,
         base64File: this.editHeader.base64File,
       };
-      console.log(body)
+      this.loading = true;
       HeaderService.editHeader(body).then((response) => {
         this.loading = false;
         this.editModalVisible = false;
@@ -201,7 +206,11 @@ export default {
     },
 
     cancelEdit() {
-      this.editHeader = null;
+      this.editHeader = {
+        headerText: '',
+        color: '#000000',
+        base64File: null,
+      };
       this.editModalVisible = false;
     },
   },

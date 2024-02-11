@@ -20,8 +20,8 @@
             >
               <input
                 type="checkbox"
-                v-model="product.selected"
-                @change="toggleSelection(product.id, product.selected)"
+                v-model="product.isTopProduct"
+                @change="toggleSelection(product.id, product.isTopProduct)"
                 class="absolute top-2 right-2 z-10 w-6 h-6"
               />
               <img
@@ -80,15 +80,10 @@ export default {
     toggleSelection(productId, isSelected) {
       console.log(`Product ID: ${productId}, Selected: ${isSelected}`);
 
-      // Here you can make your service call with productId and isSelected
-      // Example service call:
-      // MyService.updateSelection(productId, isSelected)
-      //   .then(response => {
-      //     console.log(response);
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   });
+      this.loading = true;
+      ProductService.updateIsTopProduct(productId, isSelected).then(() => {
+        this.loading = false;
+      });
     },
   },
 };

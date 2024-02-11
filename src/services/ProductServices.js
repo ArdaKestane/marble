@@ -141,7 +141,7 @@ const productServices = {
       throw error;
     }
   },
-  async updateIsTopProduct(id, isTopProduct) {
+  async updateIsTopProduct(id, body) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -158,12 +158,8 @@ const productServices = {
     try {
       const response = await axios.put(
         `${baseURL}updateIsTopProduct/${id}`,
-        JSON.stringify(isTopProduct),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        body,
+        { headers }
       );
 
       return response.data;
