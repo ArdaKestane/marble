@@ -28,7 +28,7 @@ const productServices = {
     };
 
     try {
-      const responnse = await axios.post(`${baseURL}createProduct`, body);
+      const response = await axios.post(`${baseURL}createProduct`, body);
 
       return response.data;
     } catch (error) {
@@ -98,11 +98,15 @@ const productServices = {
     };
 
     try {
-      const response = await axios.put(`${baseURL}insertImages/${id}`, JSON.stringify(images), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axios.put(
+        `${baseURL}insertImages/${id}`,
+        JSON.stringify(images),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       return response.data;
     } catch (error) {
