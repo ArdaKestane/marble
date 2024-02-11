@@ -1,3 +1,4 @@
+import { h } from 'vue';
 <template>
   <div>
     <NavigationDrawer />
@@ -74,6 +75,19 @@
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Ekle
                 </h2>
+
+                <div class="mb-4">
+                  <label class="block text-gray-600 text-sm font-medium mb-2"
+                    >Kapak Görseli:</label
+                  >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    @change="handleAddFileChange"
+                    class="w-full border p-2 rounded text-gray-600"
+                  />
+                </div>
+
                 <label class="block text-gray-600 text-lg font-bold mb-2"
                   >Başlık
                 </label>
@@ -171,15 +185,14 @@
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
-
                 <div class="mb-4">
                   <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Görsel:</label
+                    >Galeri:</label
                   >
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleAddFileChange"
+                    @change="handleEditGalleryChange"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -209,6 +222,18 @@
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Düzenle
                 </h2>
+
+                <div class="mb-4">
+                  <label class="block text-gray-600 text-sm font-medium mb-2"
+                    >Kapak Görseli:</label
+                  >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    @change="handleFileChange"
+                    class="w-full border p-2 rounded text-gray-600"
+                  />
+                </div>
 
                 <label class="block text-gray-600 text-lg font-bold mb-2"
                   >Başlık
@@ -302,22 +327,13 @@
 
                 <div class="mb-4">
                   <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Görsel:</label
+                    >Galeri:</label
                   >
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleFileChange"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Yazı Rengi:</label
-                  >
-                  <input
-                    v-model="editProduct.color"
-                    type="color"
+                    multiple="true"
+                    @change="handleEditGalleryChange"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -396,8 +412,8 @@ export default {
           arabic: '',
           french: '',
         },
-        color: '#000000',
-        base64File: null,
+        mainImage: '',
+        images: [],
       },
     };
   },
@@ -428,6 +444,19 @@ export default {
           this.newProduct.base64File = e.target.result;
         };
         reader.readAsDataURL(file);
+      }
+    },
+
+    handleAddGalleryChange(event) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.newProduct.base64Files = Array.from(files).map(
+            (file) => e.target.result
+          );
+        };
+        reader.readAsDataURL(files[0]);
       }
     },
 
@@ -490,6 +519,21 @@ export default {
           this.editProduct.base64File = e.target.result;
         };
         reader.readAsDataURL(file);
+      }
+    },
+
+    handleEditGalleryChange(event) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.editProduct.images = Array.from(files).map(
+            (file) => e.target.result
+          );
+        };
+
+        console.log(this.editProduct.images);
+        reader.readAsDataURL(files[0]);
       }
     },
 
