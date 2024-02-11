@@ -6,6 +6,7 @@
           <img
             :src="'data:image/jpeg;base64,' + item.image"
             :alt="item.header.th"
+            class="object-cover h-screen"
           />
           <div
             :style="{ color: item.color }"

@@ -24,7 +24,7 @@
           />
         </router-link>
         <h1
-          class="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-noto"
+          class="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-noto"
           :style="{ color: headerColor }"
         >
           {{ headerText }}
