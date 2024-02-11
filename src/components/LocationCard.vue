@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full grid grid-cols-1 gap-5 py-5 px-4 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1"
+    class="w-full h-fit grid grid-cols-1 gap-5 py-5 px-4 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1"
   >
     <div
       v-for="location in locations"

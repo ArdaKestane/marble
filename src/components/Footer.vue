@@ -4,7 +4,7 @@
       <MapComponent :locations="locations" />
     </div>
     <div
-      class="flex w-full p-2 flex-col xl:flex-row lg:flex-row md:flex-col sm:flex-col"
+      class="flex w-full p-2 flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-col items-center"
     >
       <LocationCard class="w-1/2" :locations="locations" />
       <ContactUs class="w-1/2" />
