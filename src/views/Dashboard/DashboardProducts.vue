@@ -192,7 +192,7 @@ import { h } from 'vue';
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleEditGalleryChange"
+                    @change="handleAddGalleryChange"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -439,9 +439,12 @@ export default {
     handleAddFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.newProduct.base64File = e.target.result;
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.newProduct.mainImage = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -452,8 +455,10 @@ export default {
       if (files && files.length > 0) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.newProduct.base64Files = Array.from(files).map(
-            (file) => e.target.result
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.newProduct.images = Array.from(files).map(
+            () => base64Data
           );
         };
         reader.readAsDataURL(files[0]);
@@ -462,15 +467,23 @@ export default {
 
     async addProduct() {
       let body = {
-        turkish: this.newProduct.turkish,
-        english: this.newProduct.english,
-        arabic: this.newProduct.arabic,
-        french: this.newProduct.french,
-        color: this.newProduct.color,
-        base64File: this.newProduct.base64File,
+        header:{
+          turkish: this.newProduct.header.turkish,
+          english: this.newProduct.header.english,
+          arabic: this.newProduct.header.arabic,
+          french: this.newProduct.header.french,
+        },
+        description:{
+          turkish: this.newProduct.description.turkish,
+          english: this.newProduct.description.english,
+          arabic: this.newProduct.description.arabic,
+          french: this.newProduct.description.french,
+        },
+        mainImage: this.newProduct.mainImage,
+        images: this.newProduct.images,
       };
 
-      ProductService.addProduct(body).then((response) => {
+      ProductService.createProduct(body).then((response) => {
         this.loading = false;
         this.addModalVisible = false;
         this.fetchProduct();
@@ -479,12 +492,20 @@ export default {
 
     cancelAdd() {
       this.newProduct = {
-        turkish: '',
-        english: '',
-        arabic: '',
-        french: '',
-        color: '#000000',
-        base64File: null,
+        header:{
+          turkish: this.newProduct.header.turkish,
+          english: this.newProduct.header.english,
+          arabic: this.newProduct.header.arabic,
+          french: this.newProduct.header.french,
+        },
+        description:{
+          turkish: this.newProduct.description.turkish,
+          english: this.newProduct.description.english,
+          arabic: this.newProduct.description.arabic,
+          french: this.newProduct.description.french,
+        },
+        mainImage: this.newProduct.mainImage,
+        images: this.newProduct.images,
       };
       this.addModalVisible = false;
     },
@@ -504,8 +525,8 @@ export default {
           arabic: product.description.arabic,
           french: product.description.french,
         },
-        color: product.color,
-        base64File: product.mainImage,
+        mainImage: this.newProduct.mainImage,
+        images: this.newProduct.images,
       };
 
       this.editModalVisible = true;
@@ -516,7 +537,9 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.editProduct.base64File = e.target.result;
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.editProduct.mainImage = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -527,27 +550,35 @@ export default {
       if (files && files.length > 0) {
         const reader = new FileReader();
         reader.onload = (e) => {
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
           this.editProduct.images = Array.from(files).map(
-            (file) => e.target.result
+            () => base64Data
           );
         };
-
-        console.log(this.editProduct.images);
         reader.readAsDataURL(files[0]);
       }
     },
 
     async saveProduct() {
       let body = {
-        turkish: this.editProduct.turkish,
-        english: this.editProduct.english,
-        arabic: this.editProduct.arabic,
-        french: this.editProduct.french,
-        color: this.editProduct.color,
-        base64File: this.editProduct.base64File,
+        header:{
+          turkish: this.editProduct.header.turkish,
+          english: this.editProduct.header.english,
+          arabic: this.editProduct.header.arabic,
+          french: this.editProduct.header.french,
+        },
+        description:{
+          turkish: this.editProduct.description.turkish,
+          english: this.editProduct.description.english,
+          arabic: this.editProduct.description.arabic,
+          french: this.editProduct.description.french,
+        },
+        mainImage: this.editProduct.mainImage,
+        images: this.editProduct.images,
       };
 
-      ProductService.editProduct(body).then((response) => {
+      ProductService.updateProduct(this.editProduct.id, body).then((response) => {
         this.loading = false;
         this.editModalVisible = false;
         this.fetchProduct();

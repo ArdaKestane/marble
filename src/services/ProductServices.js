@@ -28,7 +28,9 @@ const productServices = {
     };
 
     try {
-      const response = await axios.post(`${baseURL}createProduct`, body);
+      const response = await axios.post(`${baseURL}createProduct`, body, {
+        headers,
+      });
 
       return response.data;
     } catch (error) {
