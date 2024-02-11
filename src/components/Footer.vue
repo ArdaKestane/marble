@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      selectedLanguage: localStorage.getItem('selectedLanguage') || 'turkish',
+      selectedLanguage: localStorage.getItem('selectedLanguage'),
       loading: true,
       companyPhoneNumber: '',
       companyEMail: '',
@@ -96,7 +96,7 @@ export default {
           'All Rights Reserved': 'Tous droits réservés.',
         },
       };
-      return languageLabels[this.selectedLanguage][key] || '';
+      return languageLabels[this.selectedLanguage][key];
     },
   },
   computed: {

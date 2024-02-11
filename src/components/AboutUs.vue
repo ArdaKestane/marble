@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       loading: true,
-      selectedLanguage: localStorage.getItem('selectedLanguage') || 'turkish',
+      selectedLanguage: localStorage.getItem('selectedLanguage'),
       base64File: null,
       headerText: {
         turkish: '',

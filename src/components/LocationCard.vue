@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      selectedLanguage: localStorage.getItem('selectedLanguage') || 'turkish',
+      selectedLanguage: localStorage.getItem('selectedLanguage'),
     };
   },
 };

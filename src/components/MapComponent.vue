@@ -29,7 +29,7 @@ export default {
   setup(props) {
     const center = ref({ lat: 38.4333, lng: 27.15 });
     const selectedLanguage = ref(
-      localStorage.getItem('selectedLanguage') || 'turkish'
+      localStorage.getItem('selectedLanguage')
     );
 
     onMounted(() => {

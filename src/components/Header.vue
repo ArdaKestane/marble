@@ -150,7 +150,7 @@ import Menu from 'vue-material-design-icons/Menu.vue';
 export default {
   data() {
     return {
-      selectedLanguage: localStorage.getItem('selectedLanguage') || 'turkish',
+      selectedLanguage: localStorage.getItem('selectedLanguage'),
       drawerOpen: false,
       headerSource: null,
       headerText: '',
