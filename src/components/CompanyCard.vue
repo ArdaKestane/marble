@@ -5,14 +5,14 @@
   >
     <Loading />
   </div>
-  <div class="z-49 h-[91vh] overflow-hidden relative">
+  <div class="z-49 h-[95vh] overflow-hidden relative">
     <carousel :items-to-show="1" :wrap-around="true">
       <slide v-for="(item, index) in carouselData" :key="index">
         <div class="relative">
           <img
             :src="'data:image/jpeg;base64,' + item.image"
             :alt="item.header.th"
-            class="object-cover h-screen"
+            class="object-cover h-screen w-screen"
           />
           <div
             :style="{ color: item.color }"

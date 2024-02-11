@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative"
+    class="relative h-[5vh]"
     :class="{
       'border-b-2 border-white': drawerOpen,
     }"
