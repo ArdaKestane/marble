@@ -73,6 +73,12 @@
                     >
                       <PencilBoxOutline fillColor="green" />
                     </button>
+                    <button
+                      @click="deleteCarousel(carousel.id)"
+                      class="flex justify-center items-center text-center"
+                    >
+                      <TrashCanOutline fillColor="red" />
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -115,7 +121,7 @@
                   >Türkçe</label
                 >
                 <input
-                  v-model="newCarousel.turkish"
+                  v-model="newCarousel.header.turkish"
                   type="text"
                   id="addTurkish"
                   class="w-full border p-2 rounded text-gray-600"
@@ -127,7 +133,7 @@
                   >İngilizce</label
                 >
                 <input
-                  v-model="newCarousel.english"
+                  v-model="newCarousel.header.english"
                   type="text"
                   id="addEnglish"
                   class="w-full border p-2 rounded text-gray-600"
@@ -139,7 +145,7 @@
                   >Arapça</label
                 >
                 <input
-                  v-model="newCarousel.arabic"
+                  v-model="newCarousel.header.arabic"
                   type="text"
                   id="addArabic"
                   class="w-full border p-2 rounded text-gray-600"
@@ -151,7 +157,7 @@
                   >Fransızca</label
                 >
                 <input
-                  v-model="newCarousel.french"
+                  v-model="newCarousel.header.french"
                   type="text"
                   id="addFrench"
                   class="w-full border p-2 rounded text-gray-600"
@@ -211,7 +217,7 @@
                   >Türkçe</label
                 >
                 <input
-                  v-model="editCarousel.turkish"
+                  v-model="editCarousel.header.turkish"
                   type="text"
                   id="editTurkish"
                   class="w-full border p-2 rounded text-gray-600"
@@ -223,7 +229,7 @@
                   >İngilizce</label
                 >
                 <input
-                  v-model="editCarousel.english"
+                  v-model="editCarousel.header.english"
                   type="text"
                   id="editEnglish"
                   class="w-full border p-2 rounded text-gray-600"
@@ -236,7 +242,7 @@
                 >
 
                 <input
-                  v-model="editCarousel.arabic"
+                  v-model="editCarousel.header.arabic"
                   type="text"
                   id="editArabic"
                   class="w-full border p-2 rounded text-gray-600"
@@ -248,7 +254,7 @@
                   >Fransızca</label
                 >
                 <input
-                  v-model="editCarousel.french"
+                  v-model="editCarousel.header.french"
                   type="text"
                   id="editFrench"
                   class="w-full border p-2 rounded text-gray-600"
@@ -283,6 +289,7 @@ import HomeService from '@/services/HomeServices';
 import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
+import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
 
 export default {
   name: 'User',
@@ -291,6 +298,7 @@ export default {
     Loading,
     PencilBoxOutline,
     PlusBoxOutline,
+    TrashCanOutline,
   },
   data() {
     return {
@@ -298,20 +306,24 @@ export default {
       carouselArray: null,
 
       newCarousel: {
-        turkish: '',
-        english: '',
-        arabic: '',
-        french: '',
+        header: {
+          turkish: '',
+          english: '',
+          arabic: '',
+          french: '',
+        },
         color: '#000000',
         base64File: null,
       },
       addModalVisible: false,
 
       editCarousel: {
-        turkish: '',
-        english: '',
-        arabic: '',
-        french: '',
+        header: {
+          turkish: '',
+          english: '',
+          arabic: '',
+          french: '',
+        },
         color: '#000000',
         base64File: null,
       },
@@ -342,7 +354,9 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.newCarousel.base64File = e.target.result;
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.newCarousel.base64File = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -350,15 +364,17 @@ export default {
 
     async addCarousel() {
       let body = {
-        turkish: this.newCarousel.turkish,
-        english: this.newCarousel.english,
-        arabic: this.newCarousel.arabic,
-        french: this.newCarousel.french,
+        header: {
+          turkish: this.newCarousel.header.turkish,
+          english: this.newCarousel.header.english,
+          arabic: this.newCarousel.header.arabic,
+          french: this.newCarousel.header.french,
+        },
         color: this.newCarousel.color,
         base64File: this.newCarousel.base64File,
       };
 
-      HomeService.addCarousel(body).then((response) => {
+      HomeService.postItem(body).then((response) => {
         this.loading = false;
         this.addModalVisible = false;
         this.fetchCarousel();
@@ -367,10 +383,12 @@ export default {
 
     cancelAdd() {
       this.newCarousel = {
-        turkish: '',
-        english: '',
-        arabic: '',
-        french: '',
+        header: {
+          turkish: '',
+          english: '',
+          arabic: '',
+          french: '',
+        },
         color: '#000000',
         base64File: null,
       };
@@ -379,23 +397,34 @@ export default {
 
     editCarouselMethod(carousel) {
       this.editCarousel = {
-        turkish: carousel.header.turkish,
-        english: carousel.header.english,
-        arabic: carousel.header.arabic,
-        french: carousel.header.french,
+        id: carousel.id,
+        header: {
+          turkish: carousel.header.turkish,
+          english: carousel.header.english,
+          arabic: carousel.header.arabic,
+          french: carousel.header.french,
+        },
         color: carousel.color,
         base64File: null,
       };
 
       this.editModalVisible = true;
     },
-
+    deleteCarousel(id) {
+      this.loading = true;
+      HomeService.deleteItem(id).then((response) => {
+        this.loading = false;
+        this.fetchCarousel();
+      });
+    },
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.editCarousel.base64File = e.target.result;
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.editCarousel.base64File = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -403,15 +432,19 @@ export default {
 
     async saveCarousel() {
       let body = {
-        turkish: this.editCarousel.turkish,
-        english: this.editCarousel.english,
-        arabic: this.editCarousel.arabic,
-        french: this.editCarousel.french,
+        header: {
+          turkish: this.editCarousel.header.turkish,
+          english: this.editCarousel.header.english,
+          arabic: this.editCarousel.header.arabic,
+          french: this.editCarousel.header.french,
+        },
         color: this.editCarousel.color,
         base64File: this.editCarousel.base64File,
       };
 
-      HomeService.editCarousel(body).then((response) => {
+      console.log(body)
+
+      HomeService.putItem(this.editCarousel.id ,body).then((response) => {
         this.loading = false;
         this.editModalVisible = false;
         this.fetchCarousel();

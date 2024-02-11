@@ -86,6 +86,11 @@
                     class="block text-gray-600 text-sm font-medium mb-2"
                     >Renk</label
                   >
+                  <input
+                    v-model="editHeader.color"
+                    type="color"
+                    class="w-full border p-2 rounded text-gray-600"
+                  />
                 </div>
                 <div class="mb-4">
                   <label
@@ -173,7 +178,9 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.editHeader.base64File = e.target.result;
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.editHeader.base64File = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -181,11 +188,11 @@ export default {
 
     async saveHeader() {
       let body = {
-        headerText: this.editHeader.title,
-        color: this.editHeader.color.hex,
-        base64File: this.editHeader.avatarUrl,
+        headerText: this.editHeader.headerText,
+        color: this.editHeader.color,
+        base64File: this.editHeader.base64File,
       };
-
+      console.log(body)
       HeaderService.editHeader(body).then((response) => {
         this.loading = false;
         this.editModalVisible = false;
