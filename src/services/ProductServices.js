@@ -6,58 +6,166 @@ const productServices = {
   getProducts() {
     return axios.get(`${baseURL}getProducts`);
   },
+  getTopProducts() {
+    return axios.get(`${baseURL}getTopProducts`);
+  },
 
   getProduct(id) {
     return axios.get(`${baseURL}getProduct/${id}`);
   },
+  async createProduct(body) {
+    const token = localStorage.getItem('token');
 
-  createProduct(body) {
-    return axios.post(`${baseURL}createProduct`, body);
+    if (!token) {
+      console.error('Token not found. User is not authenticated.');
+
+      return Promise.reject(new Error('User not authenticated.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const responnse = await axios.post(`${baseURL}createProduct`, body);
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async deleteProduct(id) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token not found. User is not authenticated.');
+
+      return Promise.reject(new Error('User not authenticated.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await axios.delete(`${baseURL}deleteProduct/${id}`, {
+        headers,
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async updateProduct(id, body) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token not found. User is not authenticated.');
+
+      return Promise.reject(new Error('User not authenticated.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await axios.put(`${baseURL}updateProduct/${id}`, body, {
+        headers,
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async insertImages(id, images) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token not found. User is not authenticated.');
+
+      return Promise.reject(new Error('User not authenticated.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await axios.put(`${baseURL}insertImages/${id}`, JSON.stringify(images), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   },
 
-  deleteProduct(id) {
-    return axios.delete(`${baseURL}deleteProduct/${id}`);
-  },
+  async deleteImage(id, images) {
+    const token = localStorage.getItem('token');
 
-  updateHeader(id, header) {
-    return axios.put(`${baseURL}updateHeader/${id}`, `"${header}"`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  },
+    if (!token) {
+      console.error('Token not found. User is not authenticated.');
 
-  updateDescription(id, description) {
-    return axios.put(`${baseURL}updateDescription/${id}`, `"${description}"`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  },
+      return Promise.reject(new Error('User not authenticated.'));
+    }
 
-  updateMainImage(id, mainImage) {
-    return axios.put(`${baseURL}updateMainImage/${id}`, `"${mainImage}"`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  },
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
 
-  insertImages(id, images) {
-    return axios.put(`${baseURL}insertImages/${id}`, JSON.stringify(images), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  },
+    try {
+      const response = await axios.delete(`${baseURL}deleteImages/${id}`, {
+        data: JSON.stringify(images),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  deleteImage(id, image) {
-    return axios.delete(`${baseURL}deleteImage/${id}`, {
-      data: JSON.stringify(image),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async updateIsTopProduct(id, isTopProduct) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token not found. User is not authenticated.');
+
+      return Promise.reject(new Error('User not authenticated.'));
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await axios.put(
+        `${baseURL}updateIsTopProduct/${id}`,
+        JSON.stringify(isTopProduct),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   },
 };
 
