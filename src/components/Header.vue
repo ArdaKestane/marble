@@ -4,12 +4,10 @@
     :class="{
       'rounded-t-3xl': isModule,
       'border-b-2 border-white': drawerOpen,
-      'h-auto': drawerOpen,
-      'h-16': !drawerOpen,
     }"
   >
     <div
-      class="flex justify-between items-center bg-opacity-10 bg-repeat z-50 left-0 right-0 w-full py-2 px-5"
+      class="relative flex justify-between items-center bg-opacity-10 bg-repeat z-50 w-full py-2 px-5"
     >
       <div class="flex items-center">
         <img
@@ -43,7 +41,7 @@
     <transition name="fade">
       <div
         v-if="drawerOpen"
-        class="absolute z-10 opacity-95 bg-repeat top-full right-0 left-0 z-1 h-24 flex items-center justify-between px-5 border-t-2 border-white"
+        class="z-10 opacity-95 bg-repeat top-full right-0 left-0 z-1 h-24 flex items-center justify-between px-5 border-t-2 border-white"
       >
         <router-link
           to="/"
