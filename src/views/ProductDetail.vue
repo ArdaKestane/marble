@@ -4,11 +4,11 @@
 
     <div class="bg-stone-400 flex flex-col items-center">
       <img
-        :src="product.image"
-        :alt="product.name"
+        :src="'data:image/jpeg;base64,' + product.mainImage"
+        :alt="product.header[selectedLanguage]"
         class="object-cover w-full h-[38vh] mb-8 cursor-pointer"
         style="object-fit: cover"
-        @click="openLightbox(product.image)"
+        @click="openLightbox(product.mainImage)"
       />
 
       <div
@@ -18,12 +18,12 @@
           <h2
             class="text-3xl mb-5 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-noto"
           >
-            {{ product.name }}
+            {{ product.header[selectedLanguage] }}
           </h2>
           <p
             class="pl-5 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl font-noto"
           >
-            {{ product.description }}
+            {{ product.description[selectedLanguage] }}
           </p>
         </div>
       </div>
@@ -38,13 +38,13 @@
           class="grid grid-cols-1 mx-5 sm:mx-5 md:mx-10 lg:mx-10 xl:mx-20 pb-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
         >
           <div
-            v-for="(item, index) in product.galleryArray"
+            v-for="(item, index) in product.images"
             :key="index"
             class="overflow-hidden cursor-pointer rounded-md sm:rounded-xl md:rounded-md lg:rounded-md xl:rounded-md"
             @click="openLightbox(item)"
           >
             <img
-              :src="item"
+              :src="'data:image/jpeg;base64,' + item"
               :alt="'Gallery ' + (index + 1)"
               class="w-full h-64 object-cover"
             />
@@ -70,18 +70,31 @@
 </template>
 
 <script>
-// import ProductService from '@/services/ProductService';
-
+import ProductService from '../services/ProductServices';
+import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
 export default {
+  
   data() {
     return {
       lightboxOpen: false,
       selectedImage: '',
+      selectedLanguage: localStorage.getItem('selectedLanguage'),
       product: {
-        name: '',
-        description: '',
-        image: '',
-        galleryArray: [],
+        header: {
+          turkish: '',
+          english: '',
+          arabic: '',
+          french: ''
+        },
+        description: {
+          turkish: '',
+          english: '',
+          arabic: '',
+          french: ''
+        },
+        mainImage: '',
+        images: [],
       },
     };
   },
@@ -95,17 +108,22 @@ export default {
       this.selectedImage = '';
     },
     async fetchDetail(productId) {
-      // try {
-      //   const response = await ProductService.getProductDetail(productId);
-      //   this.product = response.data; // Adjust the response structure based on your API
-      // } catch (error) {
-      //   console.error('Error fetching product details:', error);
-      // }
+      try {
+        const response = await ProductService.getProduct(productId);
+        this.product = response.data;
+      } catch (error) {
+        console.error('Error fetching product details:', error);
+      }
     },
   },
   created() {
-    const productId = this.$route.params.productId;
+    const productId = this.$route.params.id;
     this.fetchDetail(productId);
+  },
+  components: {
+    Header,
+    Footer,
+
   },
 };
 </script>
