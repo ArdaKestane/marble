@@ -28,7 +28,7 @@
         @click="toggleDrawer"
         :style="{ color: headerColor }"
       >
-        <Menu :style="{ color: headerColor }" />
+        <Menu :size="48" :style="{ color: headerColor, cursor: 'pointer' }" />
       </div>
     </div>
     <transition name="fade">

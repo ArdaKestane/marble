@@ -6,7 +6,7 @@
     <Loading />
   </div>
   <div class="z-49 h-[91vh] overflow-hidden relative">
-    <carousel :items-to-show="1">
+    <carousel :items-to-show="1" :wrap-around="true">
       <slide v-for="(item, index) in carouselData" :key="index">
         <div class="relative">
           <img
