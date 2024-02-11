@@ -1,24 +1,26 @@
 <template>
   <div class="h-full">
-    <!-- <GMap
+    <GMapMap
       :center="center"
-      :zoom="10"
-      map-container-class="w-full h-full min-w-[300px] min-h-[500px] max-h-[750px]"
+      :zoom="7"
+      map-type-id="terrain"
+      style="width: 100%; height: 100%"
     >
-      <GMarker
-        v-for="(location, index) in locations"
-        :key="index"
-        :position="{ lat: location.y, lng: location.x }"
-        :title="location.name[selectedLanguage]"
-      />
-    </GMap> -->
+      <GMapCluster>
+        <GMapMarker
+          :key="index"
+          v-for="(location, index) in locations"
+          :position="{ lat: location.y, lng: location.x }"
+          :clickable="true"
+          :draggable="true"
+          @click="center = { lat: location.y, lng: location.x }"
+        />
+      </GMapCluster>
+    </GMapMap>
   </div>
 </template>
 
 <script>
-// import { GMap, GMarker } from 'vue3-google-map';
-import { ref, onMounted } from 'vue';
-
 export default {
   props: {
     locations: {
@@ -26,26 +28,11 @@ export default {
       default: () => [],
     },
   },
-  setup(props) {
-    const center = ref({ lat: 38.4333, lng: 27.15 });
-    const selectedLanguage = ref(
-      localStorage.getItem('selectedLanguage')
-    );
-
-    onMounted(() => {
-      // Load Google Maps API script here if needed
-      // For example, you can use the 'load-script' library
-      // (https://www.npmjs.com/package/load-script)
-    });
-
+  data() {
     return {
-      center,
-      selectedLanguage,
+      center: { lat: 51.093048, lng: 6.84212 },
     };
   },
+  components: {},
 };
 </script>
-
-<style scoped>
-/* Add or modify styles as needed */
-</style>
