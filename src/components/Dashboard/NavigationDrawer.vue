@@ -75,14 +75,14 @@
           </li>
           <li class="mb-2">
             <router-link
-              to="/dashboard/staff"
+              to="/dashboard-about-us"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
               <AccountMultiple :size="40" fillColor="#2b4c65" />
               <p
                 class="font-semibold"
                 :class="{
-                  'text-fifth font-bold': isRouteActive('/dashboard/staff'),
+                  'text-fifth font-bold': isRouteActive('/dashboard-about-us'),
                 }"
               >
                 About Us

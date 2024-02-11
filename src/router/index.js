@@ -7,8 +7,8 @@ import DashboardHeader from '../views/Dashboard/DashboardHeader.vue';
 import DashboardHome from '../views/Dashboard/DashboardHome.vue';
 import DashboardTopProducts from '../views/Dashboard/DashboardTopProduct.vue';
 import DashboardProducts from '../views/Dashboard/DashboardProducts.vue';
+import DashboardAboutUs from '../views/Dashboard/DashboardAboutUs.vue';
 // import DashboardContact from '../views/Dashboard/DashboardContact.vue';
-// import DashboardAboutUs from '../views/DashboardAboutUs.vue';
 // import DashboardFooter from '../views/DashboardFooter.vue';
 // import DashboardTimeline from '../views/DashboardTimeline.vue';
 
@@ -54,15 +54,15 @@ const routes = [
     name: 'DashboardProducts',
     component: DashboardProducts,
   },
+  {
+    path: '/dashboard-about-us',
+    name: 'DashboardAboutUs',
+    component: DashboardAboutUs,
+  },
   // {
   //   path: '/dashboard-contact',
   //   name: 'DashboardContact',
   //   component: DashboardContact,
-  // },
-  // {
-  //   path: '/dashboard-about-us',
-  //   name: 'DashboardAboutUs',
-  //   component: DashboardAboutUs,
   // },
 
   // {
