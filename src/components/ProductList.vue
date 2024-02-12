@@ -1,5 +1,11 @@
 <template>
   <div
+    v-if="loading"
+    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+  >
+    <Loading />
+  </div>
+  <div
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4 mx-10 sm:mx-10 md:mx-20 lg:mx-30 xl:mx-40 my-10 overflow-hidden"
   >
     <router-link
@@ -29,19 +35,24 @@
 
 <script>
 import ProductService from '../services/ProductServices';
-
+import Loading from './Loading.vue';
 export default {
   data() {
     return {
+      loading: true,
       selectedLanguage: localStorage.getItem('selectedLanguage'),
       productArray: [],
     };
   },
+  components: {
+    Loading,
+  },
   methods: {
     async fetchProducts() {
+      this.loading = true;
       try {
         const response = await ProductService.getProducts();
-        this.productArray = response.data.map(product => ({
+        this.productArray = response.data.map((product) => ({
           id: product.id,
           header: {
             turkish: product.header.turkish,
@@ -56,15 +67,16 @@ export default {
             french: product.description.french,
           },
           mainImage: product.mainImage,
-          images: product.images
+          images: product.images,
         }));
+        this.loading = false;
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     },
     scrollToTop() {
       window.scrollTo(0, 0);
-    }
+    },
   },
   created() {
     this.fetchProducts();

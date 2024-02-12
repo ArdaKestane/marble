@@ -28,7 +28,7 @@
         @click="toggleDrawer"
         :style="{ color: headerColor }"
       >
-        <Menu :size="48" :style="{ color: headerColor, cursor: 'pointer' }" />
+        <Menu :size="36" :style="{ color: headerColor, cursor: 'pointer' }" />
       </div>
     </div>
     <transition name="fade">
@@ -42,7 +42,7 @@
           @click="handleLinkClick"
         >
           <p
-            class="nav-item text-center flex-grow text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-noto"
+            class="nav-item text-center flex-grow text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-noto"
             :style="{ color: headerColor }"
           >
             {{
@@ -65,7 +65,7 @@
           @click="handleLinkClick"
         >
           <p
-            class="nav-item text-center flex-grow text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-noto"
+            class="nav-item text-center flex-grow text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-noto"
             :style="{ color: headerColor }"
           >
             {{
@@ -88,7 +88,7 @@
           @click="handleLinkClick"
         >
           <p
-            class="nav-item text-center flex-grow text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-noto"
+            class="nav-item text-center flex-grow text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-noto"
             :style="{ color: headerColor }"
           >
             {{
@@ -111,7 +111,7 @@
           @click="handleLinkClick"
         >
           <p
-            class="nav-item text-center flex-grow text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-noto"
+            class="nav-item text-center flex-grow text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-noto"
             :style="{ color: headerColor }"
           >
             {{

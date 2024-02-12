@@ -10,7 +10,7 @@
       <ContactUs class="w-1/2" />
     </div>
     <div
-      class="h-fit w-full py-4 flex items-center justify-center bg-opacity-30 bg-gray-200"
+      class="h-fit w-full py-4 flex items-center justify-center bg-opacity-30 bg-gray-200 relative"
     >
       <div
         class="flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center justify-between space-x-0 sm:space-x-5 md:space-x-32 lg:space-x-48 xl:space-x-80"
@@ -29,6 +29,36 @@
           <p>© Copyright 2023 Marble Company</p>
           <p>{{ allRightsReservedLabel }}</p>
         </div>
+      </div>
+
+      <div
+        class="flex gap-x-4"
+        style="position: absolute; bottom: 25px; right: 25px"
+      >
+        <img
+          @click="toggleLanguage('turkish')"
+          src="@/assets/Images/Flags/tr.jpg"
+          class="w-8 h-auto"
+          style="cursor: pointer"
+        />
+        <img
+          @click="toggleLanguage('arabic')"
+          src="@/assets/Images/Flags/ar.jpg"
+          class="w-8 h-auto"
+          style="cursor: pointer"
+        />
+        <img
+          @click="toggleLanguage('english')"
+          src="@/assets/Images/Flags/en.jpg"
+          class="w-8 h-auto"
+          style="cursor: pointer"
+        />
+        <img
+          @click="toggleLanguage('french')"
+          src="@/assets/Images/Flags/fr.jpg"
+          class="w-8 h-auto"
+          style="cursor: pointer"
+        />
       </div>
     </div>
   </div>
@@ -61,6 +91,11 @@ export default {
     this.getLocations();
   },
   methods: {
+    toggleLanguage(language) {
+      this.selectedLanguage = language;
+      localStorage.setItem('selectedLanguage', language);
+      window.location.reload();
+    },
     getLocations() {
       FooterService.getLocations()
         .then((response) => {

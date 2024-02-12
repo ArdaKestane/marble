@@ -21,15 +21,7 @@
         }}
       </h1>
 
-      <ChevronRightOutlined
-        style="
-          width: 3rem;
-          height: 3rem;
-          margin-left: 0.5rem;
-          margin-top: 0.3rem;
-        "
-        class="text-white"
-      />
+      <ChevronRight :size="48" class="text-white mt-3" />
     </router-link>
     <div
       class="grid grid-cols-1 gap-4 mt-10 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-1"
@@ -44,7 +36,7 @@
 </template>
 
 <script>
-import ChevronRightOutlined from 'vue-material-design-icons/ChevronRightBoxOutline.vue';
+import ChevronRight from 'vue-material-design-icons/ChevronRight.vue';
 import Product from './Product.vue';
 
 export default {
@@ -124,7 +116,7 @@ export default {
     },
   },
   components: {
-    ChevronRightOutlined,
+    ChevronRight,
     Product,
   },
 };
