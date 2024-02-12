@@ -2,7 +2,7 @@
   <div
     class="relative h-[5vh]"
     :class="{
-      'border-b-2 border-white': drawerOpen,
+      'border-b-2 border-white z-50': drawerOpen,
     }"
   >
     <div
