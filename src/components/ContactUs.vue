@@ -77,6 +77,25 @@
       </div>
 
       <div class="w-full">
+        <input
+          type="text"
+          class="w-full border border-[#DDDDDD] p-2 rounded placeholder:text-gray-600 text-gray-600"
+          :placeholder="
+            selectedLanguage === 'turkish'
+              ? 'Konu'
+              : selectedLanguage === 'english'
+                ? 'Subject'
+                : selectedLanguage === 'arabic'
+                  ? 'موضوع'
+                  : selectedLanguage === 'french'
+                    ? 'Sujet'
+                    : ''
+          "
+          v-model="subject"
+        />
+      </div>
+
+      <div class="w-full">
         <textarea
           class="w-full border border-[#DDDDDD] p-2 rounded placeholder:text-gray-600 text-gray-600"
           rows="5"
@@ -96,7 +115,10 @@
       </div>
     </div>
     <div class="p-4 w-4/5 space-y-4">
-      <button class="w-full bg-blue-500 text-white py-2 px-4 rounded">
+      <button
+        @click="sendEmail"
+        class="w-full bg-blue-500 text-white py-2 px-4 rounded"
+      >
         {{
           selectedLanguage === 'turkish'
             ? 'Gönder'
@@ -114,11 +136,31 @@
 </template>
 
 <script>
+import EmailServices from '@/services/EmailServices';
 export default {
   data() {
     return {
       selectedLanguage: localStorage.getItem('selectedLanguage'),
+      name: '',
+      email: '',
+      phoneNumber: '',
+      subject: '',
+      message: '',
     };
+  },
+  methods: {
+    async sendEmail() {
+      const email = {
+        fullName: this.name,
+        email: this.email,
+        phone: this.phoneNumber,
+        subject: this.subject,
+        message: this.message,
+      };
+
+      console.log(email);
+      await EmailServices.sendEmail(email);
+    },
   },
 };
 </script>
