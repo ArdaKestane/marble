@@ -4,7 +4,7 @@
       <MapComponent :locations="locations" />
     </div>
     <div
-      class="flex w-full p-2 flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-col items-center"
+      class="flex w-full p-2 flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row"
     >
       <LocationCard class="w-1/2" :locations="locations" />
       <ContactUs class="w-1/2" />
@@ -13,7 +13,7 @@
       class="h-fit w-full py-4 flex items-center justify-center bg-opacity-30 bg-gray-200 relative"
     >
       <div
-        class="flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center justify-between space-x-0 sm:space-x-5 md:space-x-32 lg:space-x-48 xl:space-x-80"
+        class="flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center justify-between space-x-0 sm:space-x-5 md:space-x-16 lg:space-x-48 xl:space-x-80"
       >
         <div class="text-center w-full text-black sm:w-auto mb-4 sm:mb-0">
           <p>{{ contactLabel }}</p>
@@ -25,40 +25,37 @@
           <p>{{ detailsLabel }}</p>
           <p>{{ companyPhoneNumber }}</p>
         </div>
-        <div class="text-center w-full text-black sm:w-auto sm:order-2">
+        <div class="text-center w-full text-black sm:w-auto mb-4 sm:order-2">
           <p>© Copyright 2023 Marble Company</p>
           <p>{{ allRightsReservedLabel }}</p>
         </div>
-      </div>
 
-      <div
-        class="flex gap-x-4"
-        style="position: absolute; bottom: 25px; right: 25px"
-      >
-        <img
-          @click="toggleLanguage('turkish')"
-          src="@/assets/Images/Flags/tr.jpg"
-          class="w-8 h-auto"
-          style="cursor: pointer"
-        />
-        <img
-          @click="toggleLanguage('arabic')"
-          src="@/assets/Images/Flags/ar.jpg"
-          class="w-8 h-auto"
-          style="cursor: pointer"
-        />
-        <img
-          @click="toggleLanguage('english')"
-          src="@/assets/Images/Flags/en.jpg"
-          class="w-8 h-auto"
-          style="cursor: pointer"
-        />
-        <img
-          @click="toggleLanguage('french')"
-          src="@/assets/Images/Flags/fr.jpg"
-          class="w-8 h-auto"
-          style="cursor: pointer"
-        />
+        <div class="flex gap-x-4 sm:order-4">
+          <img
+            @click="toggleLanguage('turkish')"
+            src="@/assets/Images/Flags/tr.jpg"
+            class="w-4 sm:w-4 md:w-6 lg:w-8 xl:w-8 2xl:w-8 h-auto"
+            style="cursor: pointer"
+          />
+          <img
+            @click="toggleLanguage('arabic')"
+            src="@/assets/Images/Flags/ar.jpg"
+            class="w-4 sm:w-4 md:w-6 lg:w-8 xl:w-8 2xl:w-8 h-auto"
+            style="cursor: pointer"
+          />
+          <img
+            @click="toggleLanguage('english')"
+            src="@/assets/Images/Flags/en.jpg"
+            class="w-4 sm:w-4 md:w-6 lg:w-8 xl:w-8 2xl:w-8 h-auto"
+            style="cursor: pointer"
+          />
+          <img
+            @click="toggleLanguage('french')"
+            src="@/assets/Images/Flags/fr.jpg"
+            class="w-4 sm:w-4 md:w-6 lg:w-8 xl:w-8 2xl:w-8 h-auto"
+            style="cursor: pointer"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +85,7 @@ export default {
     };
   },
   mounted() {
-    this.getLocations();
+    this.getFooter();
   },
   methods: {
     toggleLanguage(language) {
@@ -96,10 +93,12 @@ export default {
       localStorage.setItem('selectedLanguage', language);
       window.location.reload();
     },
-    getLocations() {
-      FooterService.getLocations()
+    getFooter() {
+      FooterService.getFooter()
         .then((response) => {
           this.locations = response.data.locations;
+          this.companyPhoneNumber = response.data.companyPhoneNumber;
+          this.companyEMail = response.data.companyEMail;
           console.log(this.locations);
           this.loading = false;
         })

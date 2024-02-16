@@ -1,9 +1,11 @@
 <template>
   <div
-    class="my-5 ml-1 mr-3 p-4 text-center w-fit flex flex-col items-center bg-gray-100 rounded-lg drop-shadow-lg"
+    class="w-full sm: md:w-full lg:w-8/12 xl:w-1/2 2xl:w-1/3 my-5 ml-1 mr-3 pt-2 px-4 text-center w-fit flex flex-col items-center rounded-2xl border border-[#DDDDDD]"
   >
-    <div class="p-4 space-y-4">
-      <p class="text-3xl text-black">
+    <div class="w-full p-4 space-y-4">
+      <p
+        class="w-full text-xl sm:text-xl md:text-3xl lg:text-3xl xl:text-4xl text-[#57534F]"
+      >
         {{
           selectedLanguage === 'turkish'
             ? 'Bize Ulaşın'
@@ -18,20 +20,11 @@
       </p>
 
       <div class="w-full">
-        <label>
-          {{ selectedLanguage === 'turkish'
-            ? 'Adınızı ve soyadınızı girin'
-            : selectedLanguage === 'english'
-              ? 'Enter your name and surname'
-              : selectedLanguage === 'arabic'
-                ? 'أدخل اسمك الكامل'
-                : selectedLanguage === 'french'
-                  ? 'Entrez votre nom et prénom'
-                  : '' }}
-          <input
-            type="text"
-            class="w-full border border-gray-300 p-2 rounded"
-            :placeholder="selectedLanguage === 'turkish'
+        <input
+          type="text"
+          class="w-full border border-[#DDDDDD] p-2 rounded placeholder:text-gray-600 text-gray-600"
+          :placeholder="
+            selectedLanguage === 'turkish'
               ? 'Adınızı ve soyadınızı girin'
               : selectedLanguage === 'english'
                 ? 'Enter your name and surname'
@@ -39,79 +32,68 @@
                   ? 'أدخل اسمك الكامل'
                   : selectedLanguage === 'french'
                     ? 'Entrez votre nom et prénom'
-                    : ''"
-            v-model="name"
-          />
-        </label>
+                    : ''
+          "
+          v-model="name"
+        />
       </div>
 
-
       <div class="w-full">
-      <label>
-        {{
-          selectedLanguage === 'turkish'
-            ? 'E-posta adresinizi girin'
-            : selectedLanguage === 'english'
-              ? 'Enter your email address'
-              : selectedLanguage === 'arabic'
-                ? 'أدخل عنوان بريدك الإلكتروني'
-                : selectedLanguage === 'french'
-                  ? 'Entrez votre adresse e-mail'
-                  : ''
-        }}
         <input
           type="email"
-          class="w-full border border-gray-300 p-2 rounded"
-          :placeholder="selectedLanguage === 'turkish' ? 'E-posta adresinizi girin' : selectedLanguage === 'english' ? 'Enter your email address' : selectedLanguage === 'arabic' ? 'أدخل عنوان بريدك الإلكتروني' : selectedLanguage === 'french' ? 'Entrez votre adresse e-mail' : ''"
+          class="w-full border border-[#DDDDDD] p-2 rounded placeholder:text-gray-600 text-gray-600"
+          :placeholder="
+            selectedLanguage === 'turkish'
+              ? 'E-posta adresinizi girin'
+              : selectedLanguage === 'english'
+                ? 'Enter your email address'
+                : selectedLanguage === 'arabic'
+                  ? 'أدخل عنوان بريدك الإلكتروني'
+                  : selectedLanguage === 'french'
+                    ? 'Entrez votre adresse e-mail'
+                    : ''
+          "
           v-model="email"
         />
-      </label>
-    </div>
+      </div>
 
-    <div class="w-full">
-      <label>
-        {{
-          selectedLanguage === 'turkish'
-            ? 'Telefon numaranızı girin (isteğe bağlı)'
-            : selectedLanguage === 'english'
-              ? 'Enter your phone number (optional)'
-              : selectedLanguage === 'arabic'
-                ? 'أدخل رقم هاتفك (اختياري)'
-                : selectedLanguage === 'french'
-                  ? 'Entrez votre numéro de téléphone (facultatif)'
-                  : ''
-        }}
+      <div class="w-full">
         <input
           type="tel"
-          class="w-full border border-gray-300 p-2 rounded"
-          :placeholder="selectedLanguage === 'turkish' ? 'Telefon numaranızı girin (isteğe bağlı)' : selectedLanguage === 'english' ? 'Enter your phone number (optional)' : selectedLanguage === 'arabic' ? 'أدخل رقم هاتفك (اختياري)' : selectedLanguage === 'french' ? 'Entrez votre numéro de téléphone (facultatif)' : ''"
+          class="w-full border border-[#DDDDDD] p-2 rounded placeholder:text-gray-600 text-gray-600"
+          :placeholder="
+            selectedLanguage === 'turkish'
+              ? 'Telefon numaranızı girin (isteğe bağlı)'
+              : selectedLanguage === 'english'
+                ? 'Enter your phone number (optional)'
+                : selectedLanguage === 'arabic'
+                  ? 'أدخل رقم هاتفك (اختياري)'
+                  : selectedLanguage === 'french'
+                    ? 'Entrez votre numéro de téléphone (facultatif)'
+                    : ''
+          "
           v-model="phoneNumber"
         />
-      </label>
-    </div>
+      </div>
 
-    <div class="w-full">
-      <label>
-        {{
-          selectedLanguage === 'turkish'
-            ? 'Mesajınızı girin'
-            : selectedLanguage === 'english'
-              ? 'Enter your message'
-              : selectedLanguage === 'arabic'
-                ? 'أدخل رسالتك'
-                : selectedLanguage === 'french'
-                  ? 'Entrez votre message'
-                  : ''
-        }}
+      <div class="w-full">
         <textarea
-          class="w-full border border-gray-300 p-2 rounded"
+          class="w-full border border-[#DDDDDD] p-2 rounded placeholder:text-gray-600 text-gray-600"
           rows="5"
-          :placeholder="selectedLanguage === 'turkish' ? 'Mesajınızı girin' : selectedLanguage === 'english' ? 'Enter your message' : selectedLanguage === 'arabic' ? 'أدخل رسالتك' : selectedLanguage === 'french' ? 'Entrez votre message' : ''"
+          :placeholder="
+            selectedLanguage === 'turkish'
+              ? 'Mesajınızı girin'
+              : selectedLanguage === 'english'
+                ? 'Enter your message'
+                : selectedLanguage === 'arabic'
+                  ? 'أدخل رسالتك'
+                  : selectedLanguage === 'french'
+                    ? 'Entrez votre message'
+                    : ''
+          "
           v-model="message"
         ></textarea>
-      </label>
-    </div>
-
+      </div>
     </div>
     <div class="p-4 w-4/5 space-y-4">
       <button class="w-full bg-blue-500 text-white py-2 px-4 rounded">

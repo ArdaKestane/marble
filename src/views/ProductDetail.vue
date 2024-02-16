@@ -1,8 +1,14 @@
 <template>
+  <div
+    v-if="loading"
+    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+  >
+    <Loading />
+  </div>
   <div>
     <Header />
 
-    <div class="bg-stone-400 flex flex-col items-center">
+    <div class="bg-[#57534F] flex flex-col items-center">
       <img
         :src="'data:image/jpeg;base64,' + product.mainImage"
         :alt="product.header[selectedLanguage]"
@@ -12,30 +18,30 @@
       />
 
       <div
-        class="grid grid-cols-1 mx-5 max-w-7xl xl:grid-cols-2 gap-x-10 gap-y-10 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl font-noto"
+        class="w-full px-2 sm:px-2 md:px-4 lg:px-8 xl:px-16 2xl:px-20 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl"
       >
-        <div>
-          <h2
-            class="text-3xl mb-5 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-noto"
-          >
-            {{ product.header[selectedLanguage] }}
-          </h2>
-          <p
-            class="pl-5 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl font-noto"
-          >
-            {{ product.description[selectedLanguage] }}
-          </p>
-        </div>
+        <h2
+          class="text-3xl mb-5 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center sm:text-center md:text-center lg:text-left"
+        >
+          {{ product.header[selectedLanguage] }}
+        </h2>
+        <p
+          class="pl-5 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl text-center sm:text-center md:text-center lg:text-left"
+        >
+          {{ product.description[selectedLanguage] }}
+        </p>
       </div>
 
-      <div class="w-full px-10 relative z-90">
+      <div
+        class="w-full mt-36 px-2 sm:px-2 md:px-4 lg:px-8 xl:px-16 2xl:px-20 relative z-90"
+      >
         <h2
-          class="ml-10 text-3xl mb-5 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-noto"
+          class="text-3xl mb-6 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center sm:text-center md:text-center lg:text-left"
         >
           Gallery
         </h2>
         <div
-          class="grid grid-cols-1 mx-5 sm:mx-5 md:mx-10 lg:mx-10 xl:mx-20 pb-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
+          class="grid grid-cols-1 pb-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
         >
           <div
             v-for="(item, index) in product.images"
@@ -58,7 +64,7 @@
         @click="closeLightbox"
       >
         <img
-          :src="selectedImage"
+          :src="'data:image/jpeg;base64,' + selectedImage"
           alt="Enlarged"
           class="object-cover w-[60vw] h-[40vh]"
         />
@@ -73,10 +79,11 @@
 import ProductService from '../services/ProductServices';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
+import Loading from '../components/Loading.vue';
 export default {
-  
   data() {
     return {
+      loading: false,
       lightboxOpen: false,
       selectedImage: '',
       selectedLanguage: localStorage.getItem('selectedLanguage'),
@@ -85,23 +92,37 @@ export default {
           turkish: '',
           english: '',
           arabic: '',
-          french: ''
+          french: '',
         },
         description: {
           turkish: '',
           english: '',
           arabic: '',
-          french: ''
+          french: '',
         },
         mainImage: '',
         images: [],
       },
     };
   },
+  components: {
+    Header,
+    Footer,
+    Loading,
+  },
+  mounted() {
+    this.goTop();
+    const productId = this.$route.params.id;
+    this.fetchDetail(productId);
+  },
   methods: {
+    goTop() {
+      window.scrollTo(0, 0);
+    },
     openLightbox(image) {
       this.lightboxOpen = true;
       this.selectedImage = image;
+      console.log('image:', image);
     },
     closeLightbox() {
       this.lightboxOpen = false;
@@ -109,21 +130,14 @@ export default {
     },
     async fetchDetail(productId) {
       try {
+        this.loading = true;
         const response = await ProductService.getProduct(productId);
         this.product = response.data;
+        this.loading = false;
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
     },
-  },
-  created() {
-    const productId = this.$route.params.id;
-    this.fetchDetail(productId);
-  },
-  components: {
-    Header,
-    Footer,
-
   },
 };
 </script>

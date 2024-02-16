@@ -1,4 +1,10 @@
 <template>
+  <div
+    v-if="loading"
+    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+  >
+    <Loading />
+  </div>
   <div>
     <NavigationDrawer />
     <div class="flex justify-center py-24 h-screen bg-gray-100">
@@ -56,7 +62,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       products: [],
     };
   },
@@ -67,6 +73,7 @@ export default {
   methods: {
     async fetchProducts() {
       try {
+        this.loading = true;
         const response = await ProductService.getProducts();
         this.products = response.data.map((product) => ({
           ...product,

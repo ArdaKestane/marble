@@ -63,12 +63,6 @@
                   </td>
                   <td class="flex flex-row justify-center items-center">
                     <button
-                      @click="editLocationMethod(location)"
-                      class="flex justify-center items-center text-center"
-                    >
-                      <PencilBoxOutline fillColor="green" />
-                    </button>
-                    <button
                       @click="deleteLocation(location.id)"
                       class="flex justify-center items-center text-center"
                     >
@@ -330,11 +324,10 @@
                 </div>
               </div>
             </div>
-            <div
+            <!-- <div
               v-if="editModalVisible"
               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
             >
-              <!-- Edit Location Modal -->
               <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Edit Location
@@ -495,7 +488,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -600,7 +593,7 @@ export default {
     },
     async fetchLocations() {
       try {
-        const response = await FooterServices.getLocations();
+        const response = await FooterServices.getFooter();
         this.locations = response.data.locations;
         this.companyEMail = response.data.companyEMail;
         this.companyPhoneNumber = response.data.companyPhoneNumber;
@@ -656,23 +649,6 @@ export default {
         y: 0,
       };
       this.addModalVisible = false;
-    },
-
-    editLocationMethod(location) {
-      this.editLocation = {
-        id: location.id,
-        name: { ...location.name },
-        address: { ...location.address },
-        phone: location.phone,
-        email: location.email,
-        x: location.x,
-        y: location.y,
-      };
-      this.editModalVisible = true;
-    },
-
-    handleEditLocationFileChange(event) {
-      // You can add file handling logic here if needed
     },
 
     async saveLocation() {

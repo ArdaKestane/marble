@@ -85,7 +85,7 @@ const productServices = {
       throw error;
     }
   },
-  async insertImages(id, images) {
+  async insertImages(id, body) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -100,15 +100,9 @@ const productServices = {
     };
 
     try {
-      const response = await axios.put(
-        `${baseURL}insertImages/${id}`,
-        JSON.stringify(images),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await axios.put(`${baseURL}insertImages/${id}`, body, {
+        headers,
+      });
 
       return response.data;
     } catch (error) {
@@ -116,7 +110,7 @@ const productServices = {
     }
   },
 
-  async deleteImage(id, images) {
+  async deleteImage(id, body) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -131,11 +125,8 @@ const productServices = {
     };
 
     try {
-      const response = await axios.delete(`${baseURL}deleteImages/${id}`, {
-        data: JSON.stringify(images),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await axios.delete(`${baseURL}deleteImage/${id}`, body, {
+        headers,
       });
 
       return response.data;

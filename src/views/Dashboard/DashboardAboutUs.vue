@@ -37,6 +37,13 @@
               <tbody>
                 <tr :key="aboutUs.id">
                   <td class="border p-2">
+                    <img
+                      :src="'data:image/jpeg;base64,' + aboutUs.base64File"
+                      alt="avatar"
+                      class="w-96 h-auto"
+                    />
+                  </td>
+                  <td class="border p-2">
                     <p class="text-black font-medium">
                       {{ aboutUs.headerText[selectedLanguage] }}
                     </p>
@@ -45,14 +52,6 @@
                     <p class="text-black font-medium">
                       {{ aboutUs.description[selectedLanguage] }}
                     </p>
-                  </td>
-
-                  <td class="border p-2">
-                    <img
-                      :src="'data:image/jpeg;base64,' + aboutUs.base64File"
-                      alt="avatar"
-                      class="w-96 h-auto"
-                    />
                   </td>
 
                   <td class="flex flex-row justify-center items-center h-96">
@@ -227,7 +226,7 @@
                     >Turkish
                   </label>
                   <input
-                    v-model="editAboutUs.header.turkish"
+                    v-model="editAboutUs.headerText.turkish"
                     type="text"
                     class="w-full border p-2 rounded text-gray-600"
                   />
@@ -238,7 +237,7 @@
                     >English
                   </label>
                   <input
-                    v-model="editAboutUs.header.english"
+                    v-model="editAboutUs.headerText.english"
                     type="text"
                     class="w-full border p-2 rounded text-gray-600"
                   />
@@ -249,7 +248,7 @@
                     >Arabic
                   </label>
                   <input
-                    v-model="editAboutUs.header.arabic"
+                    v-model="editAboutUs.headerText.arabic"
                     type="text"
                     class="w-full border p-2 rounded text-gray-600"
                   />
@@ -260,7 +259,7 @@
                     >French
                   </label>
                   <input
-                    v-model="editAboutUs.header.french"
+                    v-model="editAboutUs.headerText.french"
                     type="text"
                     class="w-full border p-2 rounded text-gray-600"
                   />
@@ -332,7 +331,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleFileChange"
+                    @change="handleEditAboutUsFileChange"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -400,7 +399,7 @@ export default {
       },
       editAboutUs: {
         id: null,
-        header: {
+        headerText: {
           turkish: '',
           english: '',
           arabic: '',
@@ -485,7 +484,7 @@ export default {
     editAboutUsMethod(aboutUs) {
       this.editAboutUs = {
         id: aboutUs.id,
-        header: { ...aboutUs.header },
+        headerText: { ...aboutUs.headerText },
         description: { ...aboutUs.description },
         color: aboutUs.color,
         base64File: aboutUs.base64File,
@@ -498,7 +497,9 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.editAboutUs.base64File = e.target.result;
+          const base64String = e.target.result;
+          const base64Data = base64String.split(',')[1];
+          this.editAboutUs.base64File = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -507,7 +508,7 @@ export default {
     async saveAboutUs() {
       let body = {
         id: this.editAboutUs.id,
-        header: { ...this.editAboutUs.header },
+        headerText: { ...this.editAboutUs.headerText },
         description: { ...this.editAboutUs.description },
         color: this.editAboutUs.color,
         base64File: this.editAboutUs.base64File,

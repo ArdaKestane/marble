@@ -9,8 +9,9 @@ import DashboardTopProducts from '../views/Dashboard/DashboardTopProduct.vue';
 import DashboardProducts from '../views/Dashboard/DashboardProducts.vue';
 import DashboardAboutUs from '../views/Dashboard/DashboardAboutUs.vue';
 import DashboardFooter from '../views/Dashboard/DashboardFooter.vue';
+import DashboardTimeline from '../views/Dashboard/DashboardTimeline.vue';
+import Timeline from '../views/Timeline.vue';
 // import DashboardContact from '../views/Dashboard/DashboardContact.vue';
-// import DashboardTimeline from '../views/DashboardTimeline.vue';
 
 const routes = [
   {
@@ -64,17 +65,23 @@ const routes = [
     name: 'DashboardFooter',
     component: DashboardFooter,
   },
+  {
+    path: '/timeline',
+    name: 'Timeline',
+    component: Timeline,
+  },
+
   // {
   //   path: '/dashboard-contact',
   //   name: 'DashboardContact',
   //   component: DashboardContact,
   // },
 
-  // {
-  //   path: '/dashboard-timeline',
-  //   name: 'DashboardTimeline',
-  //   component: DashboardTimeline,
-  // },
+  {
+    path: '/dashboard-timeline',
+    name: 'DashboardTimeline',
+    component: DashboardTimeline,
+  },
 ];
 
 const router = createRouter({

@@ -10,7 +10,11 @@
   >
     <router-link
       v-for="(product, index) in productArray"
-      :to="{ name: 'ProductDetail', params: { id: product.id }, query: { lang: selectedLanguage } }"
+      :to="{
+        name: 'ProductDetail',
+        params: { id: product.id },
+        query: { lang: selectedLanguage },
+      }"
       :key="index"
       class="relative overflow-hidden group rounded-md sm:rounded-xl md:rounded-md lg:rounded-md xl:rounded-md"
       @click="scrollToTop"

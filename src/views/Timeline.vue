@@ -2,7 +2,7 @@
   <div>
     <Header />
     <div class="py-10">
-      <ProductList />
+      <TimelineList />
     </div>
     <Footer />
   </div>
@@ -10,13 +10,13 @@
 
 <script>
 import Header from '../components/Header.vue';
-import ProductList from '../components/ProductList.vue';
+import TimelineList from '../components/TimelineList.vue';
 import Footer from '../components/Footer.vue';
 
 export default {
   components: {
     Header,
-    ProductList,
+    TimelineList,
     Footer,
   },
 };

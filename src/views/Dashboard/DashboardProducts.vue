@@ -1,8 +1,7 @@
-import { h } from 'vue';
 <template>
   <div>
     <NavigationDrawer />
-    <div class="flex justify-center py-24 h-screen bg-gray-100">
+    <div class="flex justify-center py-24 h-screen bg-gray-100 overflow-y-auto">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
           <div class="flex justify-center">
@@ -31,7 +30,7 @@ import { h } from 'vue';
                 <tr>
                   <th class="border p-2 text-black font-medium">Başlık</th>
                   <th class="border p-2 text-black font-medium">Açıklama</th>
-                  <th class="border p-2 text-black font-medium">Görsel</th>
+                  <th class="border p-2 text-black font-medium w-56">Görsel</th>
                   <th class="border p-2 text-black font-medium">Aksiyonlar</th>
                 </tr>
               </thead>
@@ -62,6 +61,12 @@ import { h } from 'vue';
                       class="flex justify-center items-center text-center"
                     >
                       <PencilBoxOutline fillColor="green" />
+                    </button>
+                    <button
+                      @click="deleteLocation(product.id)"
+                      class="flex justify-center items-center text-center"
+                    >
+                      <TrashCanOutline fillColor="red" />
                     </button>
                   </td>
                 </tr>
@@ -192,6 +197,7 @@ import { h } from 'vue';
                   <input
                     type="file"
                     accept="image/*"
+                    multiple="true"
                     @change="handleAddGalleryChange"
                     class="w-full border p-2 rounded text-gray-600"
                   />
@@ -230,7 +236,7 @@ import { h } from 'vue';
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleFileChange"
+                    @change="handleEditFileChange"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -329,13 +335,12 @@ import { h } from 'vue';
                   <label class="block text-gray-600 text-sm font-medium mb-2"
                     >Galeri:</label
                   >
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple="true"
-                    @change="handleEditGalleryChange"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
+                  <button
+                    @click="openGalleryModal"
+                    class="ml-2 w-full px-4 py-2 bg-gray-300 text-gray-600 rounded font-bold"
+                  >
+                    Galeriyi düzenle
+                  </button>
                 </div>
 
                 <div class="flex justify-center gap-x-4 pt-4">
@@ -354,6 +359,69 @@ import { h } from 'vue';
                 </div>
               </div>
             </div>
+            <div
+              v-if="galleryModalVisible"
+              class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
+            >
+              <div
+                class="bg-white p-8 w-1/2 flex flex-col justify-center mx-auto rounded shadow-lg"
+              >
+                <div class="flex justify-center">
+                  <h2
+                    class="text-2xl font-semibold mb-4 text-center text-black"
+                  >
+                    Galeriyi Düzenle
+                  </h2>
+                  <button
+                    @click="openFileInput"
+                    class="ml-auto flex justify-center text-center"
+                  >
+                    <PlusBoxOutline
+                      fillColor="#2b4c65"
+                      :size="32"
+                      class="ml-auto"
+                    />
+                  </button>
+                  <input
+                    ref="fileInput"
+                    type="file"
+                    accept="image/*"
+                    multiple="true"
+                    style="display: none"
+                    @change="handleGalleryFileChange"
+                  />
+                </div>
+                <div
+                  v-if="editProduct.images.length > 0"
+                  class="grid grid-cols-3 gap-4 overflow-y-auto"
+                >
+                  <div
+                    v-for="(image, index) in editProduct.images"
+                    :key="index"
+                    class="relative"
+                  >
+                    <img
+                      :src="'data:image/jpeg;base64,' + image"
+                      alt="Gallery Image"
+                      class="w-full h-32"
+                    />
+                    <button
+                      @click="deleteImage(image)"
+                      class="absolute z-50 top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
+                    >
+                      <TrashCanOutline :size="40" fillColor="red" />
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  @click="closeGalleryModal"
+                  class="py-2 px-4 mt-4 bg-gray-300 text-gray-600 rounded font-bold"
+                >
+                  İptal
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -367,6 +435,7 @@ import ProductService from '@/services/ProductServices.js';
 import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
+import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
 
 export default {
   name: 'User',
@@ -375,14 +444,16 @@ export default {
     Loading,
     PencilBoxOutline,
     PlusBoxOutline,
+    TrashCanOutline,
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       selectedLanguage: localStorage.getItem('selectedLanguage'),
       productArray: null,
       addModalVisible: false,
       editModalVisible: false,
+      galleryModalVisible: false,
       newProduct: {
         header: {
           turkish: '',
@@ -397,7 +468,8 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+        mainImage: '',
+        images: [],
       },
       editProduct: {
         header: {
@@ -424,9 +496,21 @@ export default {
   methods: {
     async fetchProduct() {
       try {
+        this.loading = true;
         const response = await ProductService.getProducts();
         this.productArray = response.data;
         this.loading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async deleteLocation(id) {
+      try {
+        this.loading = true;
+        await ProductService.deleteProduct(id);
+        this.loading = false;
+        this.fetchProduct();
       } catch (error) {
         console.error(error);
       }
@@ -439,7 +523,6 @@ export default {
     handleAddFileChange(event) {
       const file = event.target.files[0];
       if (file) {
-        
         const reader = new FileReader();
         reader.onload = (e) => {
           const base64String = e.target.result;
@@ -453,27 +536,27 @@ export default {
     handleAddGalleryChange(event) {
       const files = event.target.files;
       if (files && files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.newProduct.images = Array.from(files).map(
-            () => base64Data
-          );
-        };
-        reader.readAsDataURL(files[0]);
+        Array.from(files).forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const base64String = e.target.result;
+            const base64Data = base64String.split(',')[1];
+            this.newProduct.images.push(base64Data);
+          };
+          reader.readAsDataURL(file);
+        });
       }
     },
 
     async addProduct() {
       let body = {
-        header:{
+        header: {
           turkish: this.newProduct.header.turkish,
           english: this.newProduct.header.english,
           arabic: this.newProduct.header.arabic,
           french: this.newProduct.header.french,
         },
-        description:{
+        description: {
           turkish: this.newProduct.description.turkish,
           english: this.newProduct.description.english,
           arabic: this.newProduct.description.arabic,
@@ -483,22 +566,40 @@ export default {
         images: this.newProduct.images,
       };
 
+      this.loading = true;
+      this.addModalVisible = false;
       ProductService.createProduct(body).then((response) => {
+        this.newProduct = {
+          header: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          description: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          mainImage: '',
+          images: [],
+        };
         this.loading = false;
-        this.addModalVisible = false;
+
         this.fetchProduct();
       });
     },
 
     cancelAdd() {
       this.newProduct = {
-        header:{
+        header: {
           turkish: this.newProduct.header.turkish,
           english: this.newProduct.header.english,
           arabic: this.newProduct.header.arabic,
           french: this.newProduct.header.french,
         },
-        description:{
+        description: {
           turkish: this.newProduct.description.turkish,
           english: this.newProduct.description.english,
           arabic: this.newProduct.description.arabic,
@@ -525,14 +626,14 @@ export default {
           arabic: product.description.arabic,
           french: product.description.french,
         },
-        mainImage: this.newProduct.mainImage,
-        images: this.newProduct.images,
+        mainImage: product.mainImage,
+        images: product.images,
       };
 
       this.editModalVisible = true;
     },
 
-    handleFileChange(event) {
+    handleEditFileChange(event) {
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
@@ -547,28 +648,32 @@ export default {
 
     handleEditGalleryChange(event) {
       const files = event.target.files;
+
       if (files && files.length > 0) {
         const reader = new FileReader();
+
         reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.editProduct.images = Array.from(files).map(
-            () => base64Data
-          );
+          this.editProduct.images = Array.from(files).map((file) => {
+            const base64String = e.target.result;
+            const base64Data = base64String.split(',')[1];
+            return base64Data;
+          });
         };
-        reader.readAsDataURL(files[0]);
+        Array.from(files).forEach((file) => {
+          reader.readAsDataURL(file);
+        });
       }
     },
 
     async saveProduct() {
       let body = {
-        header:{
+        header: {
           turkish: this.editProduct.header.turkish,
           english: this.editProduct.header.english,
           arabic: this.editProduct.header.arabic,
           french: this.editProduct.header.french,
         },
-        description:{
+        description: {
           turkish: this.editProduct.description.turkish,
           english: this.editProduct.description.english,
           arabic: this.editProduct.description.arabic,
@@ -578,16 +683,69 @@ export default {
         images: this.editProduct.images,
       };
 
-      ProductService.updateProduct(this.editProduct.id, body).then((response) => {
-        this.loading = false;
-        this.editModalVisible = false;
-        this.fetchProduct();
-      });
+      this.loading = true;
+      ProductService.updateProduct(this.editProduct.id, body).then(
+        (response) => {
+          this.loading = false;
+          this.editModalVisible = false;
+          this.fetchProduct();
+        }
+      );
     },
 
     cancelEdit() {
       this.editProduct = null;
       this.editModalVisible = false;
+    },
+
+    openGalleryModal() {
+      this.galleryModalVisible = true;
+    },
+    openFileInput() {
+      this.$refs.fileInput.click();
+    },
+    closeGalleryModal() {
+      this.galleryModalVisible = false;
+    },
+    handleGalleryFileChange(event) {
+      const files = event.target.files;
+
+      if (files && files.length > 0) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const images = Array.from(files).map((file) => {
+            const base64String = e.target.result;
+            const base64Data = base64String.split(',')[1];
+            return base64Data;
+          });
+
+          this.insertImages(this.editProduct.id, images);
+        };
+
+        Array.from(files).forEach((file) => {
+          reader.readAsDataURL(file);
+        });
+      }
+    },
+    async insertImages(id, images) {
+      try {
+        this.loading = true;
+        const response = await ProductService.insertImages(id, images);
+        this.loading = false;
+        console.log('Images inserted successfully:', response);
+      } catch (error) {
+        console.error('Error inserting images:', error);
+      }
+    },
+    deleteImage(image) {
+      this.loading = true;
+      ProductService.deleteImage(this.editProduct.id, image).then(
+        (response) => {
+          this.loading = false;
+          this.fetchProduct();
+        }
+      );
     },
   },
 };

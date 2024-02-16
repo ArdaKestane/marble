@@ -41,6 +41,22 @@
           </li>
           <li class="mb-2">
             <router-link
+              to="/dashboard-about-us"
+              class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
+            >
+              <AccountMultiple :size="40" fillColor="#2b4c65" />
+              <p
+                class="font-semibold"
+                :class="{
+                  'text-fifth font-bold': isRouteActive('/dashboard-about-us'),
+                }"
+              >
+                About Us
+              </p>
+            </router-link>
+          </li>
+          <li class="mb-2">
+            <router-link
               to="/dashboard-top-products"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
@@ -73,22 +89,24 @@
               </p>
             </router-link>
           </li>
+
           <li class="mb-2">
             <router-link
-              to="/dashboard-about-us"
+              to="/dashboard-timeline"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AccountMultiple :size="40" fillColor="#2b4c65" />
+              <ClockTimeFive :size="40" fillColor="#2b4c65" />
               <p
                 class="font-semibold"
                 :class="{
-                  'text-fifth font-bold': isRouteActive('/dashboard-about-us'),
+                  'text-fifth font-bold': isRouteActive('/dashboard-timeline'),
                 }"
               >
-                About Us
+                Timeline
               </p>
             </router-link>
           </li>
+
           <li class="mb-2">
             <router-link
               to="/dashboard-footer"
@@ -128,6 +146,7 @@ import Ticket from 'vue-material-design-icons/Ticket.vue';
 import AccountMultiple from 'vue-material-design-icons/AccountMultiple.vue';
 import AccountGroup from 'vue-material-design-icons/AccountGroup.vue';
 import LogoutVariant from 'vue-material-design-icons/LogoutVariant.vue';
+import ClockTimeFive from 'vue-material-design-icons/ClockTimeFive.vue';
 
 export default {
   name: 'NavigationDrawer',
@@ -139,6 +158,7 @@ export default {
     AccountMultiple,
     AccountGroup,
     LogoutVariant,
+    ClockTimeFive,
   },
   methods: {
     isRouteActive(route) {

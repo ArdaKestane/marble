@@ -18,7 +18,6 @@
         :position="{ lat: location.y, lng: location.x }"
         :clickable="true"
         :draggable="true"
-        @click="center = { lat: location.y, lng: location.x }"
       />
     </GMapMap>
   </div>
@@ -32,11 +31,16 @@ export default {
       default: () => [],
     },
   },
+  mounted() {
+    this.setupMap();
+  },
   data() {
     return {
-      center: { lat: 51.093048, lng: 6.84212 },
+      center: { lat: 0, lng: 0 },
     };
   },
-  components: {},
+  methods: {
+    setupMap() {},
+  },
 };
 </script>

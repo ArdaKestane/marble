@@ -6,22 +6,22 @@
     <Loading />
   </div>
   <div
-    class="flex py-10 px-10 flex-col xl:flex-row lg:flex-row md:flex-col sm:flex-col align-center justify-center"
+    class="flex py-10 px-10 flex-col sm:flex-col md:flex-col lg:flex-col xl:flex-row align-center justify-center"
   >
     <div
-      class="flex items-center justify-center w-full xl:w-1/2 lg:w-1/2 md:w-full sm:w-full xl:mr-5"
+      class="flex items-center justify-center w-full sm:w-full md:w-full lg:w-full xl:w-1/2 xl:mr-5"
     >
       <img
         :src="'data:image/jpeg;base64,' + base64File"
         alt="Logo"
-        class="w-2/5 xl:w-1/2 lg:w-3/4 md:w-2/5 sm:w-2/5"
+        class="w-2/5 md:w-2/5 sm:w-2/5 lg:w-3/4 xl:w-2/3"
       />
     </div>
     <div
-      class="flex flex-col m-5 xl:w-1/2 lg:w-1/2 md:w-full xl:text-left lg:text-left md:text-center sm:text-center"
+      class="flex flex-col m-5 md:w-full lg:w-full xl:w-1/2 xl:text-left lg:text-center md:text-center sm:text-center"
     >
       <h2
-        class="mx-auto text-black text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4"
+        class="text-black text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4"
       >
         {{ headerText[selectedLanguage] }}
       </h2>

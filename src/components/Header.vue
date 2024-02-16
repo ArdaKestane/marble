@@ -106,7 +106,7 @@
         </router-link>
 
         <router-link
-          to="/products"
+          to="/timeline"
           class="text-white hover:text-gray-300 mx-2"
           @click="handleLinkClick"
         >
