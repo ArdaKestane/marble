@@ -132,6 +132,49 @@
         }}
       </button>
     </div>
+    <div
+      v-if="successMessage"
+      class="top-center flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+      role="alert"
+    >
+      <svg
+        class="flex-shrink-0 inline w-4 h-4 me-3"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <div>
+        <span class="font-medium">{{ successMessage }}</span>
+      </div>
+    </div>
+
+    <div
+      v-if="alertMessage"
+      class="top-center flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+    >
+      <svg
+        class="flex-shrink-0 inline w-4 h-4 me-3"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <div>
+        <span class="font-medium">{{ alertMessage }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -146,10 +189,18 @@ export default {
       phoneNumber: '',
       subject: '',
       message: '',
+
+      successMessage: '',
+      alertMessage: '',
     };
   },
   methods: {
     async sendEmail() {
+      if (!this.name || !this.email || !this.subject || !this.message) {
+        this.setAlert('Lütfen iletişim formundaki tüm alanları doldurunuz');
+        return;
+      }
+
       const email = {
         fullName: this.name,
         email: this.email,
@@ -158,13 +209,42 @@ export default {
         message: this.message,
       };
 
-      console.log(email);
-      await EmailServices.sendEmail(email);
+      try {
+        await EmailServices.sendEmail(email);
+        this.setSuccess('Mesajınız başarıyla gönderildi');
+        this.name = '';
+        this.email = '';
+        this.phoneNumber = '';
+        this.subject = '';
+        this.message = '';
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    setSuccess(message) {
+      this.successMessage = message;
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 5000);
+    },
+    setAlert(message) {
+      this.alertMessage = message;
+
+      setTimeout(() => {
+        this.alertMessage = '';
+      }, 5000);
     },
   },
 };
 </script>
 
 <style scoped>
-/* Add or modify styles as needed */
+.top-center {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
 </style>
