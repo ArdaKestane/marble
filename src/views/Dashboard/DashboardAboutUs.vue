@@ -457,6 +457,22 @@ export default {
       AboutUsService.addAboutUs(body).then((response) => {
         this.loadingAboutUs = false;
         this.addModalVisible = false;
+        this.newAboutUs = {
+          header: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          description: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          color: '#000000',
+          base64File: null,
+        };
         this.fetchAboutUs();
       });
     },

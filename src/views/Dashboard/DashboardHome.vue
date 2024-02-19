@@ -377,6 +377,16 @@ export default {
       HomeService.postItem(body).then((response) => {
         this.loading = false;
         this.addModalVisible = false;
+        this.newCarousel = {
+          header: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          color: '#000000',
+          base64File: null,
+        };
         this.fetchCarousel();
       });
     },
@@ -442,9 +452,9 @@ export default {
         base64File: this.editCarousel.base64File,
       };
 
-      console.log(body)
+      console.log(body);
 
-      HomeService.putItem(this.editCarousel.id ,body).then((response) => {
+      HomeService.putItem(this.editCarousel.id, body).then((response) => {
         this.loading = false;
         this.editModalVisible = false;
         this.fetchCarousel();

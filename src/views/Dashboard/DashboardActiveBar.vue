@@ -197,6 +197,11 @@ export default {
         await ActiveBarService.editActiveBar(body);
         this.loading = false;
         this.editModalVisible = false;
+        this.editActiveBar = {
+          totalCustomers: 0,
+          totalMarbleProduction: 0.0,
+          yearsOfExperience: 0,
+        };
         this.fetchActiveBar();
       } catch (error) {
         console.error(error);

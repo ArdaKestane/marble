@@ -532,6 +532,21 @@ export default {
         console.error(error);
       } finally {
         this.loading = false;
+        this.newTimeline = {
+          header: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          description: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          image: null,
+        };
       }
     },
 

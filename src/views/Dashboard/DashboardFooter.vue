@@ -141,7 +141,6 @@
                   />
                 </div>
 
-                <!-- Action buttons -->
                 <div class="flex justify-center gap-x-4 pt-4">
                   <button
                     @click="cancelEditCompanyInfo"
@@ -307,7 +306,6 @@
                   />
                 </div>
 
-                <!-- Action buttons -->
                 <div class="flex justify-center gap-x-4 pt-4">
                   <button
                     @click="cancelAddLocation"
@@ -588,6 +586,24 @@ export default {
       FooterServices.updateInformation(body).then((response) => {
         this.loading = false;
         this.editCompanyInfoModalVisible = false;
+        this.newLocation = {
+          name: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          address: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          phone: '',
+          email: '',
+          x: 0,
+          y: 0,
+        };
         this.fetchLocations();
       });
     },
@@ -625,6 +641,24 @@ export default {
       FooterServices.addLocation(body).then((response) => {
         this.loading = false;
         this.addModalVisible = false;
+        this.newLocation = {
+          name: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          address: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          phone: '',
+          email: '',
+          x: 0,
+          y: 0,
+        };
         this.fetchLocations();
       });
     },
@@ -664,6 +698,25 @@ export default {
 
       FooterServices.updateInformation(body).then((response) => {
         this.loading = false;
+        this.editLocation = {
+          id: null,
+          name: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          address: {
+            turkish: '',
+            english: '',
+            arabic: '',
+            french: '',
+          },
+          phone: '',
+          email: '',
+          x: 0,
+          y: 0,
+        };
         this.editModalVisible = false;
         this.fetchLocations();
       });
