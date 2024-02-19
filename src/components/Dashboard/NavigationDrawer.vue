@@ -12,7 +12,7 @@
               to="/dashboard-header"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <Handshake :size="40" fillColor="#2b4c65" />
+              <Handshake :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -28,7 +28,7 @@
               to="/dashboard-home"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <ChatQuestionOutline :size="40" fillColor="#2b4c65" />
+              <ChatQuestionOutline :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -44,7 +44,7 @@
               to="/dashboard-about-us"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AccountMultiple :size="40" fillColor="#2b4c65" />
+              <AccountMultiple :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -61,7 +61,7 @@
               to="/dashboard-active-bar"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AlignVerticalDistribute :size="40" fillColor="#2b4c65" />
+              <AlignVerticalDistribute :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -79,7 +79,7 @@
               to="/dashboard-top-products"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <FileDocument :size="40" fillColor="#2b4c65" />
+              <FileDocument :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -97,7 +97,7 @@
               to="/dashboard-products"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <Ticket :size="40" fillColor="#2b4c65" />
+              <Ticket :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -114,7 +114,7 @@
               to="/dashboard-timeline"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <ClockTimeFive :size="40" fillColor="#2b4c65" />
+              <ClockTimeFive :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -131,7 +131,7 @@
               to="/dashboard-footer"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AccountGroup :size="40" fillColor="#2b4c65" />
+              <AccountGroup :size="40" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
