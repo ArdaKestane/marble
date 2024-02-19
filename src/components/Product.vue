@@ -5,7 +5,7 @@
     @click="openProductDetail(product)"
   >
     <img
-      :src="'data:image/jpeg;base64,' + product.mainImage"
+      :src=" product.mainImage"
       :alt="product.name"
       class="w-full h-64 object-cover xl:w-120 xl:h-64 lg:w-120 lg:h-64 sm:block lg:transition-transform lg:transform lg:origin-center lg:hover:scale-105 xl:transition-transform xl:transform xl:origin-center xl:hover:scale-105"
     />

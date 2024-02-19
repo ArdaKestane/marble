@@ -49,7 +49,7 @@
 
                   <td class="border p-2">
                     <img
-                      :src="'data:image/jpeg;base64,' + product.mainImage"
+                      :src=" product.mainImage"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -401,7 +401,7 @@
                     class="relative"
                   >
                     <img
-                      :src="'data:image/jpeg;base64,' + image"
+                      :src=" image"
                       alt="Gallery Image"
                       class="w-full h-32"
                     />

@@ -20,7 +20,7 @@
       @click="scrollToTop"
     >
       <img
-        :src="'data:image/jpeg;base64,' + product.mainImage"
+        :src=" product.mainImage"
         :alt="product.header[selectedLanguage]"
         class="w-full h-64 object-cover xl:w-120 xl:h-64 lg:w-120 lg:h-64 md:w-120 md:h-64 sm:w-120 sm:h-64 sm:block lg:transition-transform lg:transform lg:origin-center lg:hover:scale-105 xl:transition-transform xl:transform xl:origin-center xl:hover:scale-105"
       />

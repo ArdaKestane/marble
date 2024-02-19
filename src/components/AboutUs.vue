@@ -12,8 +12,8 @@
       class="flex items-center justify-center w-full sm:w-full md:w-full lg:w-full xl:w-1/2 xl:mr-5"
     >
       <img
-        :src="'data:image/jpeg;base64,' + base64File"
-        alt="Logo"
+        :src=" image"
+        alt="aboutus"
         class="w-2/5 md:w-2/5 sm:w-2/5 lg:w-3/4 xl:w-2/3"
       />
     </div>
@@ -43,7 +43,7 @@ export default {
     return {
       loading: true,
       selectedLanguage: localStorage.getItem('selectedLanguage'),
-      base64File: null,
+       image: null,
       headerText: {
         turkish: '',
         english: '',
@@ -66,9 +66,9 @@ export default {
       try {
         this.loading = true;
         const response = await AboutUsService.getAboutUs();
-        const { id, base64File, description, headerText } = response.data;
+        const { id, image, description, headerText } = response.data;
 
-        this.base64File = base64File;
+        this. image = image;
         this.description = {
           turkish: description.turkish,
           english: description.english,
@@ -83,6 +83,7 @@ export default {
         };
 
         this.loading = false;
+        console.log(this. image)
       } catch (error) {
         console.error('Error fetching data:', error);
       }

@@ -10,7 +10,7 @@
       <slide v-for="(item, index) in carouselData" :key="index">
         <div class="relative">
           <img
-            :src="'data:image/jpeg;base64,' + item.image"
+            :src="item.image"
             :alt="item.header.th"
             class="object-cover h-screen w-screen"
           />

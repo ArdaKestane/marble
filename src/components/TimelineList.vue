@@ -13,7 +13,7 @@
       class="block sm:block md:block lg:flex xl:flex 2xl:flex w-full mb-6 shadow-lg rounded-2xl border border-[#DDDDDD] overflow-hidden"
     >
       <img
-        :src="'data:image/jpeg;base64,' + timeline.image"
+        :src=" timeline.image"
         alt="timeline"
         :class="{
           'rounded-tl-lg rounded-bl-lg': index % 2 === 0,

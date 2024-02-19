@@ -44,7 +44,7 @@
                   </td>
                   <td class="border p-2">
                     <img
-                      :src="'data:image/jpeg;base64,' + time.image"
+                      :src=" time.image"
                       alt="avatar"
                       class="w-96 h-auto"
                     />

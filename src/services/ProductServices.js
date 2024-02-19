@@ -110,7 +110,7 @@ const productServices = {
     }
   },
 
-  async deleteImage(id, base64File) {
+  async deleteImage(id,  image) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -127,7 +127,7 @@ const productServices = {
     try {
       const response = await axios.delete(
         `${baseURL}deleteImage/${id}`,
-        { params: { id: id, base64File: base64File } },
+        { params: { id: id,  image:  image } },
         {
           headers,
         }

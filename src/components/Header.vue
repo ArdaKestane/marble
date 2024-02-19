@@ -11,7 +11,7 @@
       <div class="flex items-center">
         <router-link to="/" @click="scrollToTop">
           <img
-            :src="'data:image/jpeg;base64,' + headerSource"
+            :src="headerSource"
             alt="Logo"
             class="w-12 sm:w-12 md:w-16 lg:w-20 xl:w-24 font-noto mx-5"
           />
@@ -148,7 +148,7 @@ export default {
     },
     getHeader() {
       HeaderService.getHeader().then((response) => {
-        this.headerSource = response.data.base64File;
+        this.headerSource = response.data. image;
         this.headerText = response.data.headerText;
         this.headerColor = response.data.color;
       });

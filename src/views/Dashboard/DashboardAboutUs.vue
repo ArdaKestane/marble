@@ -38,7 +38,7 @@
                 <tr :key="aboutUs.id">
                   <td class="border p-2">
                     <img
-                      :src="'data:image/jpeg;base64,' + aboutUs.base64File"
+                      :src=" aboutUs. image"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -395,7 +395,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       },
       editAboutUs: {
         id: null,
@@ -412,7 +412,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       },
     };
   },
@@ -440,7 +440,7 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.newAboutUs.base64File = e.target.result;
+          this.newAboutUs. image = e.target.result;
         };
         reader.readAsDataURL(file);
       }
@@ -451,7 +451,7 @@ export default {
         header: { ...this.newAboutUs.header },
         description: { ...this.newAboutUs.description },
         color: this.newAboutUs.color,
-        base64File: this.newAboutUs.base64File,
+         image: this.newAboutUs. image,
       };
 
       AboutUsService.addAboutUs(body).then((response) => {
@@ -471,7 +471,7 @@ export default {
             french: '',
           },
           color: '#000000',
-          base64File: null,
+           image: null,
         };
         this.fetchAboutUs();
       });
@@ -492,7 +492,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       };
       this.addModalVisible = false;
     },
@@ -503,7 +503,7 @@ export default {
         headerText: { ...aboutUs.headerText },
         description: { ...aboutUs.description },
         color: aboutUs.color,
-        base64File: aboutUs.base64File,
+         image: aboutUs. image,
       };
       this.editModalVisible = true;
     },
@@ -515,7 +515,7 @@ export default {
         reader.onload = (e) => {
           const base64String = e.target.result;
           const base64Data = base64String.split(',')[1];
-          this.editAboutUs.base64File = base64Data;
+          this.editAboutUs. image = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -527,7 +527,7 @@ export default {
         headerText: { ...this.editAboutUs.headerText },
         description: { ...this.editAboutUs.description },
         color: this.editAboutUs.color,
-        base64File: this.editAboutUs.base64File,
+         image: this.editAboutUs. image,
       };
 
       AboutUsService.editAboutUs(body).then((response) => {
@@ -553,7 +553,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       };
       this.editModalVisible = false;
     },

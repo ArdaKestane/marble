@@ -41,7 +41,7 @@
                 <tr v-for="carousel in carouselArray" :key="carousel.id">
                   <td class="border p-2">
                     <img
-                      :src="'data:image/jpeg;base64,' + carousel.image"
+                      :src=" carousel.image"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -313,7 +313,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       },
       addModalVisible: false,
 
@@ -325,7 +325,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       },
       editModalVisible: false,
     };
@@ -356,7 +356,7 @@ export default {
         reader.onload = (e) => {
           const base64String = e.target.result;
           const base64Data = base64String.split(',')[1];
-          this.newCarousel.base64File = base64Data;
+          this.newCarousel. image = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -371,7 +371,7 @@ export default {
           french: this.newCarousel.header.french,
         },
         color: this.newCarousel.color,
-        base64File: this.newCarousel.base64File,
+         image: this.newCarousel. image,
       };
 
       HomeService.postItem(body).then((response) => {
@@ -385,7 +385,7 @@ export default {
             french: '',
           },
           color: '#000000',
-          base64File: null,
+           image: null,
         };
         this.fetchCarousel();
       });
@@ -400,7 +400,7 @@ export default {
           french: '',
         },
         color: '#000000',
-        base64File: null,
+         image: null,
       };
       this.addModalVisible = false;
     },
@@ -415,7 +415,7 @@ export default {
           french: carousel.header.french,
         },
         color: carousel.color,
-        base64File: null,
+         image: null,
       };
 
       this.editModalVisible = true;
@@ -434,7 +434,7 @@ export default {
         reader.onload = (e) => {
           const base64String = e.target.result;
           const base64Data = base64String.split(',')[1];
-          this.editCarousel.base64File = base64Data;
+          this.editCarousel. image = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -449,7 +449,7 @@ export default {
           french: this.editCarousel.header.french,
         },
         color: this.editCarousel.color,
-        base64File: this.editCarousel.base64File,
+         image: this.editCarousel. image,
       };
 
       console.log(body);

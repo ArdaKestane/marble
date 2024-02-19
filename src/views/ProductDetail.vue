@@ -10,7 +10,7 @@
 
     <div class="bg-[#57534F] flex flex-col items-center">
       <img
-        :src="'data:image/jpeg;base64,' + product.mainImage"
+        :src=" product.mainImage"
         :alt="product.header[selectedLanguage]"
         class="object-cover w-full h-[38vh] mb-8 cursor-pointer"
         style="object-fit: cover"
@@ -60,7 +60,7 @@
             @click="openLightbox(item)"
           >
             <img
-              :src="'data:image/jpeg;base64,' + item"
+              :src=" item"
               :alt="'Gallery ' + (index + 1)"
               class="w-full h-64 object-cover"
             />
@@ -74,7 +74,7 @@
         @click="closeLightbox"
       >
         <img
-          :src="'data:image/jpeg;base64,' + selectedImage"
+          :src=" selectedImage"
           alt="Enlarged"
           class="object-cover w-[60vw] h-[40vh]"
         />
