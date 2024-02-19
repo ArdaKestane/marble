@@ -83,29 +83,6 @@
         </router-link>
 
         <router-link
-          to="/products"
-          class="text-white hover:text-gray-300 mx-2"
-          @click="handleLinkClick"
-        >
-          <p
-            class="nav-item text-center flex-grow text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-noto"
-            :style="{ color: headerColor }"
-          >
-            {{
-              selectedLanguage === 'turkish'
-                ? 'İletişim'
-                : selectedLanguage === 'english'
-                  ? 'Contact'
-                  : selectedLanguage === 'arabic'
-                    ? 'تواصل'
-                    : selectedLanguage === 'french'
-                      ? 'communication'
-                      : ''
-            }}
-          </p>
-        </router-link>
-
-        <router-link
           to="/timeline"
           class="text-white hover:text-gray-300 mx-2"
           @click="handleLinkClick"
