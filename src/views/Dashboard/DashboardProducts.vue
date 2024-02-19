@@ -63,7 +63,7 @@
                       <PencilBoxOutline fillColor="green" />
                     </button>
                     <button
-                      @click="deleteLocation(product.id)"
+                      @click="deleteProduct(product.id)"
                       class="flex justify-center items-center text-center"
                     >
                       <TrashCanOutline fillColor="red" />
@@ -505,7 +505,7 @@ export default {
       }
     },
 
-    async deleteLocation(id) {
+    async deleteProduct(id) {
       try {
         this.loading = true;
         await ProductService.deleteProduct(id);
