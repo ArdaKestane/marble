@@ -25,9 +25,11 @@
           <p>{{ detailsLabel }}</p>
           <p>{{ companyPhoneNumber }}</p>
         </div>
-        <div class="text-center w-full text-black sm:w-auto mb-4 sm:order-2">
-          <p>© Copyright 2023 Marble Company</p>
+        <div
+          class="text-center w-full text-black sm:w-auto mb-4 sm:mb-0 sm:order-2"
+        >
           <p>{{ allRightsReservedLabel }}</p>
+          <p>© Copyright 2023 Marble Company</p>
         </div>
 
         <div class="flex gap-x-4 sm:order-4">

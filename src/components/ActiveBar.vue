@@ -20,7 +20,7 @@
       </h1>
       <span
         class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl my-8 text-white font-bold"
-        >{{ totalCustomers }}</span
+        >{{ totalCustomers + '+' }}</span
       >
       <FaceAgent :size="64" class="text-white" />
     </div>
@@ -42,7 +42,7 @@
       </h1>
       <span
         class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl my-8 text-white font-bold"
-        >{{ totalMarbleProduction }} m<sup>2</sup></span
+        >{{ totalMarbleProduction + '+' }} m<sup>2</sup></span
       >
       <ChartLine :size="64" class="text-white" />
     </div>
@@ -64,7 +64,7 @@
       </h1>
       <span
         class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl my-8 text-white font-bold"
-        >{{ yearsOfExperience }}</span
+        >{{ yearsOfExperience + '+' }}</span
       >
       <StarShooting :size="64" class="text-white" />
     </div>

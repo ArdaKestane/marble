@@ -117,7 +117,7 @@
     <div class="p-4 w-4/5 space-y-4">
       <button
         @click="sendEmail"
-        class="w-full bg-blue-500 text-white py-2 px-4 rounded"
+        class="w-full bg-[#57534F] text-white font-bold py-2 px-4 rounded"
       >
         {{
           selectedLanguage === 'turkish'
