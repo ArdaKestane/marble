@@ -11,6 +11,7 @@ import DashboardAboutUs from '../views/Dashboard/DashboardAboutUs.vue';
 import DashboardFooter from '../views/Dashboard/DashboardFooter.vue';
 import DashboardTimeline from '../views/Dashboard/DashboardTimeline.vue';
 import Timeline from '../views/Timeline.vue';
+import DashboardActiveBar from '../views/Dashboard/DashboardActiveBar.vue';
 // import DashboardContact from '../views/Dashboard/DashboardContact.vue';
 
 const routes = [
@@ -70,17 +71,15 @@ const routes = [
     name: 'Timeline',
     component: Timeline,
   },
-
-  // {
-  //   path: '/dashboard-contact',
-  //   name: 'DashboardContact',
-  //   component: DashboardContact,
-  // },
-
   {
     path: '/dashboard-timeline',
     name: 'DashboardTimeline',
     component: DashboardTimeline,
+  },
+  {
+    path: '/dashboard-active-bar',
+    name: 'DashboardActiveBar',
+    component: DashboardActiveBar,
   },
 ];
 

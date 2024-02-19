@@ -57,6 +57,40 @@
           </li>
           <li class="mb-2">
             <router-link
+              to="/dashboard-footer"
+              class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
+            >
+              <AccountGroup :size="40" fillColor="#2b4c65" />
+              <p
+                class="font-semibold"
+                :class="{
+                  'text-fifth font-bold': isRouteActive('/dashboard-footer'),
+                }"
+              >
+                Footer
+              </p>
+            </router-link>
+          </li>
+          <li class="mb-2">
+            <router-link
+              to="/dashboard-active-bar"
+              class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
+            >
+              <FileDocument :size="40" fillColor="#2b4c65" />
+              <p
+                class="font-semibold"
+                :class="{
+                  'text-fifth font-bold': isRouteActive(
+                    '/dashboard-active-bar'
+                  ),
+                }"
+              >
+                Active Bar
+              </p>
+            </router-link>
+          </li>
+          <li class="mb-2">
+            <router-link
               to="/dashboard-top-products"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
