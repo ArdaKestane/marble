@@ -55,28 +55,13 @@
               </p>
             </router-link>
           </li>
-          <li class="mb-2">
-            <router-link
-              to="/dashboard-footer"
-              class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
-            >
-              <AccountGroup :size="40" fillColor="#2b4c65" />
-              <p
-                class="font-semibold"
-                :class="{
-                  'text-fifth font-bold': isRouteActive('/dashboard-footer'),
-                }"
-              >
-                Footer
-              </p>
-            </router-link>
-          </li>
+
           <li class="mb-2">
             <router-link
               to="/dashboard-active-bar"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <FileDocument :size="40" fillColor="#2b4c65" />
+              <AlignVerticalDistribute :size="40" fillColor="#2b4c65" />
               <p
                 class="font-semibold"
                 :class="{
@@ -181,6 +166,7 @@ import AccountMultiple from 'vue-material-design-icons/AccountMultiple.vue';
 import AccountGroup from 'vue-material-design-icons/AccountGroup.vue';
 import LogoutVariant from 'vue-material-design-icons/LogoutVariant.vue';
 import ClockTimeFive from 'vue-material-design-icons/ClockTimeFive.vue';
+import AlignVerticalDistribute from 'vue-material-design-icons/AlignVerticalDistribute.vue';
 
 export default {
   name: 'NavigationDrawer',
@@ -193,6 +179,7 @@ export default {
     AccountGroup,
     LogoutVariant,
     ClockTimeFive,
+    AlignVerticalDistribute,
   },
   methods: {
     isRouteActive(route) {

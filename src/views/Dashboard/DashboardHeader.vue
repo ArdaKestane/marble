@@ -29,24 +29,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr :key="header.id">
+                <tr>
                   <td class="border p-2">
-                    <p class="text-gray-600">{{ header.headerText }}</p>
+                    <p class="text-gray-600">{{ header?.headerText }}</p>
                   </td>
                   <td class="border p-2">
                     <div
-                      :style="{ backgroundColor: header.color }"
+                      :style="{ backgroundColor: header?.color }"
                       style="width: 100%; height: 40px"
                     ></div>
                   </td>
                   <td class="border p-2">
                     <img
-                      :src="'data:image/jpeg;base64,' + header.base64File"
+                      :src="
+                        'data:image/jpeg;base64,' + (header?.base64File || '')
+                      "
                       alt="avatar"
                       class="w-10 h-10 rounded-full"
                     />
                   </td>
-
                   <td class="flex flex-row justify-center items-center h-14">
                     <button
                       @click="editHeaderMethod()"
@@ -144,7 +145,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       header: null,
       editHeader: {
         headerText: '',
@@ -161,6 +162,7 @@ export default {
   methods: {
     async fetchHeader() {
       try {
+        this.loading = true;
         const response = await HeaderService.getHeader();
         this.header = response.data;
         this.loading = false;
@@ -199,8 +201,13 @@ export default {
       };
       this.loading = true;
       HeaderService.editHeader(body).then((response) => {
-        this.loading = false;
+        this.editHeader = {
+          headerText: '',
+          color: '#000000',
+          base64File: null,
+        };
         this.editModalVisible = false;
+        this.loading = false;
         this.fetchHeader();
       });
     },

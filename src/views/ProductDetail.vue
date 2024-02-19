@@ -21,12 +21,12 @@
         class="w-full px-2 sm:px-2 md:px-4 lg:px-8 xl:px-16 2xl:px-20 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl"
       >
         <h2
-          class="text-3xl mb-5 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center sm:text-center md:text-center lg:text-left"
+          class="text-3xl mb-5 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center sm:text-center md:text-center lg:text-left text-white"
         >
           {{ product.header[selectedLanguage] }}
         </h2>
         <p
-          class="pl-5 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl text-center sm:text-center md:text-center lg:text-left"
+          class="pl-5 text-md sm:text-md md:text-lg lg:text-2xl xl:text-2xl text-center sm:text-center md:text-center lg:text-left text-white"
         >
           {{ product.description[selectedLanguage] }}
         </p>
@@ -36,9 +36,19 @@
         class="w-full mt-36 px-2 sm:px-2 md:px-4 lg:px-8 xl:px-16 2xl:px-20 relative z-90"
       >
         <h2
-          class="text-3xl mb-6 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center sm:text-center md:text-center lg:text-left"
+          class="text-3xl mb-6 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center sm:text-center md:text-center lg:text-left text-white"
         >
-          Gallery
+          {{
+            selectedLanguage === 'turkish'
+              ? 'Galeri'
+              : selectedLanguage === 'english'
+                ? 'Gallery'
+                : selectedLanguage === 'arabic'
+                  ? 'صالة عرض'
+                  : selectedLanguage === 'french'
+                    ? 'Galerie'
+                    : ''
+          }}
         </h2>
         <div
           class="grid grid-cols-1 pb-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
