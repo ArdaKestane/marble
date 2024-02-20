@@ -31,7 +31,7 @@
                 class="absolute top-2 right-2 z-10 w-6 h-6"
               />
               <img
-                :src=" product.mainImage"
+                :src="product.mainImage"
                 :alt="product.name"
                 class="w-full h-64 object-cover xl:w-120 xl:h-64 lg:w-120 lg:h-64 sm:block lg:transition-transform lg:transform lg:origin-center lg:hover:scale-105 xl:transition-transform xl:transform xl:origin-center xl:hover:scale-105"
               />
@@ -80,13 +80,13 @@ export default {
           selected: false,
         }));
         this.loading = false;
+
+        console.log(this.products);
       } catch (error) {
         console.error(error);
       }
     },
     toggleSelection(productId, isSelected) {
-      console.log(`Product ID: ${productId}, Selected: ${isSelected}`);
-
       this.loading = true;
       ProductService.updateIsTopProduct(productId, isSelected).then(() => {
         this.loading = false;

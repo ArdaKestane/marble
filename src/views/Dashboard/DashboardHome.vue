@@ -41,7 +41,7 @@
                 <tr v-for="carousel in carouselArray" :key="carousel.id">
                   <td class="border p-2">
                     <img
-                      :src=" carousel.image"
+                      :src="carousel.image"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -66,7 +66,7 @@
                     <p class="text-gray-600">{{ carousel.header.french }}</p>
                   </td>
 
-                  <td class="flex flex-row justify-center items-center h-48">
+                  <td class="flex flex-row justify-center items-center h-96">
                     <button
                       @click="editCarouselMethod(carousel)"
                       class="flex justify-center items-center text-center"
@@ -99,7 +99,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleAddFileChange"
+                    @change="handleAddFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -195,7 +195,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleFileChange"
+                    @change="handleFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -285,11 +285,12 @@
 
 <script>
 import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
-import HomeService from '@/services/HomeServices';
 import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
+import HomeService from '@/services/HomeServices';
+import FileService from '@/services/FileServices';
 
 export default {
   name: 'User',
@@ -313,7 +314,7 @@ export default {
           french: '',
         },
         color: '#000000',
-         image: null,
+        image: null,
       },
       addModalVisible: false,
 
@@ -325,7 +326,7 @@ export default {
           french: '',
         },
         color: '#000000',
-         image: null,
+        image: null,
       },
       editModalVisible: false,
     };
@@ -345,24 +346,31 @@ export default {
       }
     },
 
+    async uploadNewFile() {
+      await FileService.upload(this.newCarousel.image).then((response) => {
+        this.newCarousel.image = response.data[0];
+      });
+    },
+
+    async uploadEditFile() {
+      await FileService.upload(this.editCarousel.image).then((response) => {
+        this.editCarousel.image = response.data[0];
+      });
+    },
+
     openAddModal() {
       this.addModalVisible = true;
     },
 
     handleAddFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.newCarousel.image = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
+      this.newCarousel.image = event.target.files[0];
     },
 
     async addCarousel() {
+      if (this.newCarousel.image) {
+        await this.uploadNewFile();
+      }
+
       let body = {
         header: {
           turkish: this.newCarousel.header.turkish,
@@ -371,7 +379,7 @@ export default {
           french: this.newCarousel.header.french,
         },
         color: this.newCarousel.color,
-         image: this.newCarousel.image,
+        image: this.newCarousel.image,
       };
 
       HomeService.postItem(body).then((response) => {
@@ -385,7 +393,7 @@ export default {
             french: '',
           },
           color: '#000000',
-           image: null,
+          image: null,
         };
         this.fetchCarousel();
       });
@@ -400,7 +408,7 @@ export default {
           french: '',
         },
         color: '#000000',
-         image: null,
+        image: null,
       };
       this.addModalVisible = false;
     },
@@ -415,7 +423,7 @@ export default {
           french: carousel.header.french,
         },
         color: carousel.color,
-         image: null,
+        image: null,
       };
 
       this.editModalVisible = true;
@@ -428,19 +436,14 @@ export default {
       });
     },
     handleFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.editCarousel.image = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
+      this.editCarousel.image = event.target.files[0];
     },
 
     async saveCarousel() {
+      if (this.editCarousel.image) {
+        await this.uploadEditFile();
+      }
+
       let body = {
         header: {
           turkish: this.editCarousel.header.turkish,
@@ -449,10 +452,8 @@ export default {
           french: this.editCarousel.header.french,
         },
         color: this.editCarousel.color,
-         image: this.editCarousel.image,
+        image: this.editCarousel.image,
       };
-
-      console.log(body);
 
       HomeService.putItem(this.editCarousel.id, body).then((response) => {
         this.loading = false;

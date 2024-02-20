@@ -2,8 +2,12 @@ import axios from 'axios';
 
 const baseURL = 'https://marble.azurewebsites.net/api';
 
-const fileService = {
-  async upload(files) {
+const fileServices = {
+  async getExperiences() {
+    return axios.get(`${baseURL}/Experience`);
+  },
+
+  async updateExperiences(body) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -12,15 +16,12 @@ const fileService = {
       return Promise.reject(new Error('User not authenticated.'));
     }
 
-    const formData = new FormData();
-    formData.append('files', files);
-    return axios.post(`${baseURL}/File/upload`, formData, {
+    return axios.put(`${baseURL}/Experience`, body, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
       },
     });
   },
 };
 
-export default fileService;
+export default fileServices;

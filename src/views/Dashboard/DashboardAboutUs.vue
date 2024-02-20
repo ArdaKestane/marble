@@ -10,12 +10,6 @@
             >
               About Us
             </h1>
-            <button
-              @click="openAddModal"
-              class="ml-auto flex justify-center text-center"
-            >
-              <PlusBoxOutline fillColor="#2b4c65" :size="32" class="ml-auto" />
-            </button>
           </div>
 
           <div class="overflow-x-auto relative">
@@ -38,7 +32,7 @@
                 <tr :key="aboutUs.id">
                   <td class="border p-2">
                     <img
-                      :src=" aboutUs.image"
+                      :src="aboutUs.image"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -331,7 +325,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleEditAboutUsFileChange"
+                    @change="handleEditAboutUsFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -360,12 +354,11 @@
 </template>
 
 <script>
+import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
+import Loading from '@/components/Loading.vue';
 import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
 import AboutUsService from '@/services/AboutUsServices';
-import FileServices from '@/services/FileServices';
-import Loading from '@/components/Loading.vue';
-import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
-import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
+import FileService from '@/services/FileServices';
 
 export default {
   name: 'User',
@@ -373,7 +366,6 @@ export default {
     NavigationDrawer,
     Loading,
     PencilBoxOutline,
-    PlusBoxOutline,
   },
   data() {
     return {
@@ -396,7 +388,7 @@ export default {
           french: '',
         },
         color: '#000000',
-         image: null,
+        image: null,
       },
       editAboutUs: {
         id: null,
@@ -413,7 +405,7 @@ export default {
           french: '',
         },
         color: '#000000',
-         image: null,
+        image: null,
       },
     };
   },
@@ -432,70 +424,10 @@ export default {
       }
     },
 
-    openAddModal() {
-      this.addModalVisible = true;
-    },
-
-    handleAddAboutUsFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.newAboutUs.image = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-
-    async addAboutUs() {
-      let body = {
-        header: { ...this.newAboutUs.header },
-        description: { ...this.newAboutUs.description },
-        color: this.newAboutUs.color,
-         image: this.newAboutUs.image,
-      };
-
-      AboutUsService.addAboutUs(body).then((response) => {
-        this.loadingAboutUs = false;
-        this.addModalVisible = false;
-        this.newAboutUs = {
-          header: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          description: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          color: '#000000',
-           image: null,
-        };
-        this.fetchAboutUs();
+    async uploadFile() {
+      await FileService.upload(this.editAboutUs.image).then((response) => {
+        this.editAboutUs.image = response.data[0];
       });
-    },
-
-    cancelAddAboutUs() {
-      this.newAboutUs = {
-        header: {
-          turkish: '',
-          english: '',
-          arabic: '',
-          french: '',
-        },
-        description: {
-          turkish: '',
-          english: '',
-          arabic: '',
-          french: '',
-        },
-        color: '#000000',
-         image: null,
-      };
-      this.addModalVisible = false;
     },
 
     editAboutUsMethod(aboutUs) {
@@ -504,35 +436,26 @@ export default {
         headerText: { ...aboutUs.headerText },
         description: { ...aboutUs.description },
         color: aboutUs.color,
-         image: aboutUs.image,
+        image: aboutUs.image,
       };
       this.editModalVisible = true;
     },
 
     handleEditAboutUsFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const formData = new FormData();
-        formData.append('files', file);
-        
-        FileServices.uploadFile(formData)
-          .then(response => {
-            console.log('File uploaded successfully:', response);
-            this.editAboutUs.image = response[0];
-          })
-          .catch(error => {
-            console.error('Error uploading file:', error);
-          });
-      }
+      this.editAboutUs.image = event.target.files[0];
     },
 
     async saveAboutUs() {
+      if (this.editAboutUs.image) {
+        await this.uploadFile();
+      }
+
       let body = {
         id: this.editAboutUs.id,
         headerText: { ...this.editAboutUs.headerText },
         description: { ...this.editAboutUs.description },
         color: this.editAboutUs.color,
-         image: this.editAboutUs.image,
+        image: this.editAboutUs.image,
       };
 
       AboutUsService.editAboutUs(body).then((response) => {
@@ -558,7 +481,7 @@ export default {
           french: '',
         },
         color: '#000000',
-         image: null,
+        image: null,
       };
       this.editModalVisible = false;
     },

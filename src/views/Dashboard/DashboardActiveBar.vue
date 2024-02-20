@@ -132,7 +132,7 @@
 
 <script>
 import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
-import ActiveBarService from '@/services/ActiveBarServices';
+import ExperienceServices from '@/services/ExperienceServices';
 import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 
@@ -167,7 +167,7 @@ export default {
     async fetchActiveBar() {
       try {
         this.loading = true;
-        const response = await ActiveBarService.getActiveBar();
+        const response = await ExperienceServices.getExperiences();
         this.activeBar = response.data;
         this.loading = false;
       } catch (error) {
@@ -194,7 +194,7 @@ export default {
       this.loading = true;
 
       try {
-        await ActiveBarService.editActiveBar(body);
+        await ExperienceServices.updateExperiences(body);
         this.loading = false;
         this.editModalVisible = false;
         this.editActiveBar = {

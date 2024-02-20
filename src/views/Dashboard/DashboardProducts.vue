@@ -49,7 +49,7 @@
 
                   <td class="border p-2">
                     <img
-                      :src=" product.mainImage"
+                      :src="product.mainImage"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -400,11 +400,7 @@
                     :key="index"
                     class="relative"
                   >
-                    <img
-                      :src=" image"
-                      alt="Gallery Image"
-                      class="w-full h-32"
-                    />
+                    <img :src="image" alt="Gallery Image" class="w-full h-32" />
                     <button
                       @click="deleteImage(image)"
                       class="absolute z-50 top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
@@ -430,12 +426,13 @@
 </template>
 
 <script>
-import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
-import ProductService from '@/services/ProductServices.js';
-import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
+import Loading from '@/components/Loading.vue';
+import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
+import ProductService from '@/services/ProductServices.js';
+import FileServices from '@/services/FileServices.js';
 
 export default {
   name: 'User',
@@ -520,33 +517,13 @@ export default {
       this.addModalVisible = true;
     },
 
-    handleAddFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.newProduct.mainImage = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
+    handleAddFileChange(event) {},
 
-    handleAddGalleryChange(event) {
-      const files = event.target.files;
-      if (files && files.length > 0) {
-        Array.from(files).forEach((file) => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const base64String = e.target.result;
-            const base64Data = base64String.split(',')[1];
-            this.newProduct.images.push(base64Data);
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-    },
+    handleEditFileChange(event) {},
+
+    handleAddGalleryChange(event) {},
+
+    handleGalleryFileChange(event) {},
 
     async addProduct() {
       let body = {
@@ -633,38 +610,6 @@ export default {
       this.editModalVisible = true;
     },
 
-    handleEditFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.editProduct.mainImage = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-
-    handleEditGalleryChange(event) {
-      const files = event.target.files;
-
-      if (files && files.length > 0) {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          this.editProduct.images = Array.from(files).map((file) => {
-            const base64String = e.target.result;
-            const base64Data = base64String.split(',')[1];
-            return base64Data;
-          });
-        };
-        Array.from(files).forEach((file) => {
-          reader.readAsDataURL(file);
-        });
-      }
-    },
-
     async saveProduct() {
       let body = {
         header: {
@@ -707,27 +652,7 @@ export default {
     closeGalleryModal() {
       this.galleryModalVisible = false;
     },
-    handleGalleryFileChange(event) {
-      const files = event.target.files;
 
-      if (files && files.length > 0) {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          const images = Array.from(files).map((file) => {
-            const base64String = e.target.result;
-            const base64Data = base64String.split(',')[1];
-            return base64Data;
-          });
-
-          this.insertImages(this.editProduct.id, images);
-        };
-
-        Array.from(files).forEach((file) => {
-          reader.readAsDataURL(file);
-        });
-      }
-    },
     async insertImages(id, images) {
       try {
         this.loading = true;

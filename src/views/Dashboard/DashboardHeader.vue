@@ -41,9 +41,7 @@
                   </td>
                   <td class="border p-2">
                     <img
-                      :src="
-                         header?.image
-                      "
+                      :src="header?.image"
                       alt="avatar"
                       class="w-10 h-10 rounded-full"
                     />
@@ -102,7 +100,8 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleFileChange"
+                    ref="photoInput"
+                    @change="handleFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -131,10 +130,11 @@
 </template>
 
 <script>
-import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
-import HeaderService from '@/services/HeaderServices';
-import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
+import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
+import Loading from '@/components/Loading.vue';
+import HeaderService from '@/services/HeaderServices';
+import FileService from '@/services/FileServices';
 
 export default {
   name: 'User',
@@ -150,7 +150,7 @@ export default {
       editHeader: {
         headerText: '',
         color: '#000000',
-         image: null,
+        image: null,
       },
       editModalVisible: false,
     };
@@ -176,35 +176,35 @@ export default {
       this.editHeader = {
         headerText: this.header.headerText,
         color: this.header.color,
-         image: this.header.image,
+        image: null,
       };
     },
 
     handleFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.editHeader.image = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
+      this.editHeader.image = event.target.files[0];
+    },
+
+    async uploadFile() {
+      await FileService.upload(this.editHeader.image).then((response) => {
+        this.editHeader.image = response.data[0];
+      });
     },
 
     async saveHeader() {
+      if (this.editHeader.image) {
+        await this.uploadFile();
+      }
       let body = {
         headerText: this.editHeader.headerText,
         color: this.editHeader.color,
-         image: this.editHeader.image,
+        image: this.editHeader.image,
       };
       this.loading = true;
       HeaderService.editHeader(body).then((response) => {
         this.editHeader = {
           headerText: '',
           color: '#000000',
-           image: null,
+          image: null,
         };
         this.editModalVisible = false;
         this.loading = false;
@@ -216,7 +216,7 @@ export default {
       this.editHeader = {
         headerText: '',
         color: '#000000',
-         image: null,
+        image: null,
       };
       this.editModalVisible = false;
     },
