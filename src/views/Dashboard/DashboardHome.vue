@@ -356,7 +356,7 @@ export default {
         reader.onload = (e) => {
           const base64String = e.target.result;
           const base64Data = base64String.split(',')[1];
-          this.newCarousel. image = base64Data;
+          this.newCarousel.image = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -371,7 +371,7 @@ export default {
           french: this.newCarousel.header.french,
         },
         color: this.newCarousel.color,
-         image: this.newCarousel. image,
+         image: this.newCarousel.image,
       };
 
       HomeService.postItem(body).then((response) => {
@@ -434,7 +434,7 @@ export default {
         reader.onload = (e) => {
           const base64String = e.target.result;
           const base64Data = base64String.split(',')[1];
-          this.editCarousel. image = base64Data;
+          this.editCarousel.image = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -449,7 +449,7 @@ export default {
           french: this.editCarousel.header.french,
         },
         color: this.editCarousel.color,
-         image: this.editCarousel. image,
+         image: this.editCarousel.image,
       };
 
       console.log(body);

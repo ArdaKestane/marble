@@ -68,7 +68,7 @@ export default {
         const response = await AboutUsService.getAboutUs();
         const { id, image, description, headerText } = response.data;
 
-        this. image = image;
+        this.image = image;
         this.description = {
           turkish: description.turkish,
           english: description.english,
@@ -83,7 +83,7 @@ export default {
         };
 
         this.loading = false;
-        console.log(this. image)
+        console.log(this.image)
       } catch (error) {
         console.error('Error fetching data:', error);
       }

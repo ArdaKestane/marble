@@ -148,7 +148,7 @@ export default {
     },
     getHeader() {
       HeaderService.getHeader().then((response) => {
-        this.headerSource = response.data. image;
+        this.headerSource = response.data.image;
         this.headerText = response.data.headerText;
         this.headerColor = response.data.color;
       });

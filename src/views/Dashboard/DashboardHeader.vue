@@ -42,7 +42,7 @@
                   <td class="border p-2">
                     <img
                       :src="
-                         header?. image
+                         header?.image
                       "
                       alt="avatar"
                       class="w-10 h-10 rounded-full"
@@ -176,7 +176,7 @@ export default {
       this.editHeader = {
         headerText: this.header.headerText,
         color: this.header.color,
-         image: this.header. image,
+         image: this.header.image,
       };
     },
 
@@ -187,7 +187,7 @@ export default {
         reader.onload = (e) => {
           const base64String = e.target.result;
           const base64Data = base64String.split(',')[1];
-          this.editHeader. image = base64Data;
+          this.editHeader.image = base64Data;
         };
         reader.readAsDataURL(file);
       }
@@ -197,7 +197,7 @@ export default {
       let body = {
         headerText: this.editHeader.headerText,
         color: this.editHeader.color,
-         image: this.editHeader. image,
+         image: this.editHeader.image,
       };
       this.loading = true;
       HeaderService.editHeader(body).then((response) => {

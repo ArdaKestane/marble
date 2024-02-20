@@ -38,7 +38,7 @@
                 <tr :key="aboutUs.id">
                   <td class="border p-2">
                     <img
-                      :src=" aboutUs. image"
+                      :src=" aboutUs.image"
                       alt="avatar"
                       class="w-96 h-auto"
                     />
@@ -362,6 +362,7 @@
 <script>
 import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
 import AboutUsService from '@/services/AboutUsServices';
+import FileServices from '@/services/FileServices';
 import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
@@ -440,7 +441,7 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.newAboutUs. image = e.target.result;
+          this.newAboutUs.image = e.target.result;
         };
         reader.readAsDataURL(file);
       }
@@ -451,7 +452,7 @@ export default {
         header: { ...this.newAboutUs.header },
         description: { ...this.newAboutUs.description },
         color: this.newAboutUs.color,
-         image: this.newAboutUs. image,
+         image: this.newAboutUs.image,
       };
 
       AboutUsService.addAboutUs(body).then((response) => {
@@ -503,7 +504,7 @@ export default {
         headerText: { ...aboutUs.headerText },
         description: { ...aboutUs.description },
         color: aboutUs.color,
-         image: aboutUs. image,
+         image: aboutUs.image,
       };
       this.editModalVisible = true;
     },
@@ -511,13 +512,17 @@ export default {
     handleEditAboutUsFileChange(event) {
       const file = event.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.editAboutUs. image = base64Data;
-        };
-        reader.readAsDataURL(file);
+        const formData = new FormData();
+        formData.append('files', file);
+        
+        FileServices.uploadFile(formData)
+          .then(response => {
+            console.log('File uploaded successfully:', response);
+            this.editAboutUs.image = response[0];
+          })
+          .catch(error => {
+            console.error('Error uploading file:', error);
+          });
       }
     },
 
@@ -527,7 +532,7 @@ export default {
         headerText: { ...this.editAboutUs.headerText },
         description: { ...this.editAboutUs.description },
         color: this.editAboutUs.color,
-         image: this.editAboutUs. image,
+         image: this.editAboutUs.image,
       };
 
       AboutUsService.editAboutUs(body).then((response) => {
