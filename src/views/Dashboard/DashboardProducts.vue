@@ -88,7 +88,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleAddFileChange"
+                    @change="handleAddFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -198,7 +198,7 @@
                     type="file"
                     accept="image/*"
                     multiple="true"
-                    @change="handleAddGalleryChange"
+                    @change="handleAddGalleryChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -236,7 +236,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleEditFileChange"
+                    @change="handleEditFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -388,7 +388,7 @@
                     accept="image/*"
                     multiple="true"
                     style="display: none"
-                    @change="handleGalleryFileChange"
+                    @change="handleGalleryFileChange($event)"
                   />
                 </div>
                 <div
@@ -432,7 +432,7 @@ import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
 import Loading from '@/components/Loading.vue';
 import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
 import ProductService from '@/services/ProductServices.js';
-import FileServices from '@/services/FileServices.js';
+import FileService from '@/services/FileServices.js';
 
 export default {
   name: 'User',
@@ -517,15 +517,55 @@ export default {
       this.addModalVisible = true;
     },
 
-    handleAddFileChange(event) {},
+    handleAddFileChange(event) {
+      this.newProduct.mainImage = event.target.files[0];
+    },
 
-    handleEditFileChange(event) {},
+    async uploadNewFile() {
+      await FileService.upload(this.newProduct.mainImage).then((response) => {
+        this.newProduct.mainImage = response.data[0];
+      });
+    },
 
-    handleAddGalleryChange(event) {},
+    handleEditFileChange(event) {
+      this.editProduct.mainImage = event.target.files[0];
+    },
 
-    handleGalleryFileChange(event) {},
+    async uploadEditFile() {
+      await FileService.upload(this.editProduct.mainImage).then((response) => {
+        this.editProduct.mainImage = response.data[0];
+      });
+    },
+
+    handleAddGalleryChange(event) {
+      this.newProduct.images = event.target.files;
+    },
+
+    async uploadNewGallery() {
+      await FileService.upload(this.newProduct.images).then((response) => {
+        this.newProduct.images = response.data;
+      });
+    },
+
+    handleGalleryFileChange(event) {
+      this.editProduct.images = event.target.files;
+    },
+
+    async uploadEditGallery() {
+      await FileService.upload(this.editProduct.images).then((response) => {
+        this.editProduct.images = response.data;
+      });
+    },
 
     async addProduct() {
+      if (this.newProduct.mainImage) {
+        await this.uploadNewFile();
+      }
+
+      if (this.newProduct.images.length > 0) {
+        await this.uploadNewGallery();
+      }
+
       let body = {
         header: {
           turkish: this.newProduct.header.turkish,
@@ -611,6 +651,14 @@ export default {
     },
 
     async saveProduct() {
+      if (this.editProduct.mainImage) {
+        await this.uploadEditFile();
+      }
+
+      if (this.editProduct.images.length > 0) {
+        await this.uploadEditGallery();
+      }
+
       let body = {
         header: {
           turkish: this.editProduct.header.turkish,
