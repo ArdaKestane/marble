@@ -16,12 +16,15 @@
             class="w-12 sm:w-12 md:w-16 lg:w-20 xl:w-24 font-noto mx-5"
           />
         </router-link>
-        <h1
-          class="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-noto"
-          :style="{ color: headerColor }"
-        >
-          {{ headerText }}
-        </h1>
+
+        <router-link to="/" @click="scrollToTop">
+          <h1
+            class="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-noto"
+            :style="{ color: headerColor }"
+          >
+            {{ headerText }}
+          </h1>
+        </router-link>
       </div>
       <div
         class="w-8 sm:w-8 md:w-12 lg:w-14 xl:w-16 font-noto"

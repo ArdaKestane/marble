@@ -1,5 +1,11 @@
 <template>
   <div
+    v-if="loading"
+    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+  >
+    <Loading />
+  </div>
+  <div
     class="block sm:block md:flex lg:flex xl:flex 2xl:flex justify-center items-center w-full text-black bg-[#C1B8AD] py-2 sm:py-2 md:py-2 lg:py-4 xl:py-6 2xl:py-8"
   >
     <div class="flex flex-col justify-center items-center w-full my-8">
@@ -75,6 +81,8 @@
 import FaceAgent from 'vue-material-design-icons/FaceAgent.vue';
 import ChartLine from 'vue-material-design-icons/ChartLine.vue';
 import StarShooting from 'vue-material-design-icons/StarShooting.vue';
+import Loading from './Loading.vue';
+import ExperienceService from '@/services/ExperienceServices';
 
 export default {
   data() {
@@ -90,6 +98,18 @@ export default {
     ChartLine,
     StarShooting,
     FaceAgent,
+    Loading,
+  },
+  mounted() {
+    this.getExperience();
+  },
+  methods: {
+    async getExperience() {
+      const response = await ExperienceService.getExperiences();
+      this.totalCustomers = response.data.totalCustomers;
+      this.totalMarbleProduction = response.data.totalMarbleProduction;
+      this.yearsOfExperience = response.data.yearsOfExperience;
+    },
   },
 };
 </script>
