@@ -6,7 +6,7 @@
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
           <div class="flex justify-center">
             <h1
-              class="mx-auto text-2xl font-semibold mb-4 text-center text-black"
+              class="ml-auto text-2xl font-semibold mb-4 text-center text-black"
             >
               Timeline
             </h1>
@@ -43,11 +43,7 @@
                     </p>
                   </td>
                   <td class="border p-2">
-                    <img
-                      :src=" time.image"
-                      alt="avatar"
-                      class="w-96 h-auto"
-                    />
+                    <img :src="time.image" alt="avatar" class="w-96 h-auto" />
                   </td>
                   <td class="border p-2">
                     <p class="text-black font-medium">
@@ -117,7 +113,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleAddFileChange"
+                    @change="handleAddFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -275,7 +271,7 @@
                   <input
                     type="file"
                     accept="image/*"
-                    @change="handleFileChange"
+                    @change="handleFileChange($event)"
                     class="w-full border p-2 rounded text-gray-600"
                   />
                 </div>
@@ -425,11 +421,12 @@
 
 <script>
 import NavigationDrawer from '@/components/Dashboard/NavigationDrawer.vue';
-import TimelineService from '@/services/TimelineServices';
 import Loading from '@/components/Loading.vue';
 import PencilBoxOutline from 'vue-material-design-icons/PencilBoxOutline.vue';
 import PlusBoxOutline from 'vue-material-design-icons/PlusBoxOutline.vue';
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
+import TimelineService from '@/services/TimelineServices';
+import FileService from '@/services/FileServices';
 
 export default {
   name: 'Timeline',
@@ -497,12 +494,22 @@ export default {
       }
     },
 
+    async uploadFile() {
+      await FileService.upload(this.newTimeline.image).then((response) => {
+        this.newTimeline.image = response.data[0];
+      });
+    },
+
     openAddModal() {
       this.addModalVisible = true;
     },
 
     async saveAddTimeline() {
       this.loading = true;
+
+      if (this.newTimeline.image) {
+        await this.uploadFile();
+      }
 
       let body = {
         header: {
@@ -551,16 +558,7 @@ export default {
     },
 
     handleAddFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.newTimeline.image = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
+      this.newTimeline.image = event.target.files[0];
     },
 
     cancelAdd() {
@@ -603,20 +601,22 @@ export default {
     },
 
     handleFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const base64String = e.target.result;
-          const base64Data = base64String.split(',')[1];
-          this.editTimeline.image = base64Data;
-        };
-        reader.readAsDataURL(file);
-      }
+      this.editTimeline.image = event.target.files[0];
+    },
+
+    async uploadEditFile() {
+      await FileService.upload(this.editTimeline.image).then((response) => {
+        this.editTimeline.image = response.data[0];
+      });
     },
 
     async saveTimeline() {
       this.loading = true;
+
+      if (this.editTimeline.image) {
+        await this.uploadEditFile();
+      }
+
       let body = {
         header: {
           turkish: this.editTimeline.header.turkish,
