@@ -2,7 +2,7 @@
   <div>
     <NavigationDrawer />
     <div class="flex justify-center py-24 h-screen bg-gray-100 overflow-y-auto">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
           <div class="flex justify-center">
             <h1
@@ -76,7 +76,9 @@
               v-if="addModalVisible"
               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
             >
-              <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
+              <div
+                class="bg-white p-8 w-1/3 h-2/3 mx-auto rounded shadow-lg overflow-y-auto"
+              >
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Ekle
                 </h2>
@@ -224,7 +226,9 @@
               v-if="editModalVisible"
               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
             >
-              <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
+              <div
+                class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg overflow-y-auto h-2/3"
+              >
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Düzenle
                 </h2>
@@ -414,7 +418,7 @@
                   @click="closeGalleryModal"
                   class="py-2 px-4 mt-4 bg-gray-300 text-gray-600 rounded font-bold"
                 >
-                  İptal
+                  Kapat
                 </button>
               </div>
             </div>
@@ -484,6 +488,7 @@ export default {
         mainImage: '',
         images: null,
       },
+      imagesToAdd: [],
     };
   },
   mounted() {
@@ -494,6 +499,9 @@ export default {
     async fetchProduct() {
       try {
         this.loading = true;
+        this.addModalVisible = false;
+        this.editModalVisible = false;
+        this.galleryModalVisible = false;
         const response = await ProductService.getProducts();
         this.productArray = response.data;
         this.loading = false;
@@ -548,12 +556,13 @@ export default {
     },
 
     handleGalleryFileChange(event) {
-      this.editProduct.images = event.target.files;
+      this.imagesToAdd = event.target.files;
+      this.insertImages(this.editProduct.id, this.imagesToAdd);
     },
 
     async uploadEditGallery() {
-      await FileService.upload(this.editProduct.images).then((response) => {
-        this.editProduct.images = response.data;
+      await FileService.upload(this.imagesToAdd).then((response) => {
+        this.imagesToAdd = response.data;
       });
     },
 
@@ -655,10 +664,6 @@ export default {
         await this.uploadEditFile();
       }
 
-      if (this.editProduct.images) {
-        await this.uploadEditGallery();
-      }
-
       let body = {
         header: {
           turkish: this.editProduct.header.turkish,
@@ -673,7 +678,6 @@ export default {
           french: this.editProduct.description.french,
         },
         mainImage: this.editProduct.mainImage,
-
       };
 
       this.loading = true;
@@ -704,9 +708,13 @@ export default {
     async insertImages(id, images) {
       try {
         this.loading = true;
-        const response = await ProductService.insertImages(id, images);
+        await this.uploadEditGallery();
+        const response = await ProductService.insertImages(
+          id,
+          this.imagesToAdd
+        );
         this.loading = false;
-        console.log('Images inserted successfully:', response);
+        this.fetchProduct();
       } catch (error) {
         console.error('Error inserting images:', error);
       }

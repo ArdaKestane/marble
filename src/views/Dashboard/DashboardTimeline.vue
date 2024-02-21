@@ -79,7 +79,9 @@
               v-if="addModalVisible"
               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
             >
-              <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
+              <div
+                class="bg-white p-8 w-1/3 h-2/3 mx-auto rounded shadow-lg overflow-y-auto"
+              >
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Ekle
                 </h2>
@@ -257,7 +259,9 @@
               v-if="editModalVisible"
               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
             >
-              <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
+              <div
+                class="bg-white p-8 w-1/3 h-2/3 mx-auto rounded shadow-lg overflow-y-auto"
+              >
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Düzenle
                 </h2>

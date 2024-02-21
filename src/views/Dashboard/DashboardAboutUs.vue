@@ -6,7 +6,7 @@
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
           <div class="flex justify-center">
             <h1
-              class="ml-auto text-2xl font-semibold mb-4 text-center text-black"
+              class="mx-auto text-2xl font-semibold mb-4 text-center text-black"
             >
               About Us
             </h1>
@@ -59,154 +59,14 @@
                 </tr>
               </tbody>
             </table>
-            <div
-              v-if="addModalVisible"
-              class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
-            >
-              <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
-                <h2 class="text-2xl font-semibold mb-4 text-center text-black">
-                  Add New About Us
-                </h2>
 
-                <label class="block text-gray-600 text-lg font-bold mb-2"
-                  >Başlık</label
-                >
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Türkçe
-                  </label>
-                  <input
-                    v-model="newAboutUs.header.turkish"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >İngilizce
-                  </label>
-                  <input
-                    v-model="newAboutUs.header.english"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Arapça
-                  </label>
-                  <input
-                    v-model="newAboutUs.header.arabic"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Fransızca
-                  </label>
-                  <input
-                    v-model="newAboutUs.header.french"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <label class="block text-gray-600 text-lg font-bold mb-2"
-                  >Açıklama</label
-                >
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Türkçe
-                  </label>
-                  <input
-                    v-model="newAboutUs.description.turkish"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >İngilizce
-                  </label>
-                  <input
-                    v-model="newAboutUs.description.english"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Arapça
-                  </label>
-                  <input
-                    v-model="newAboutUs.description.arabic"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Fransızca
-                  </label>
-                  <input
-                    v-model="newAboutUs.description.french"
-                    type="text"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Color:</label
-                  >
-                  <input
-                    v-model="newAboutUs.color"
-                    type="color"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="mb-4">
-                  <label class="block text-gray-600 text-sm font-medium mb-2"
-                    >Image:</label
-                  >
-                  <input
-                    type="file"
-                    accept="image/*"
-                    @change="handleAddFileChange"
-                    class="w-full border p-2 rounded text-gray-600"
-                  />
-                </div>
-
-                <div class="flex justify-center gap-x-4 pt-4">
-                  <button
-                    @click="cancelAddAboutUs"
-                    class="ml-2 px-4 py-2 bg-gray-300 text-gray-600 rounded font-bold"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    @click="addAboutUs"
-                    class="px-4 py-2 bg-blue-500 text-white rounded font-bold"
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-            </div>
             <div
               v-if="editModalVisible"
               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
             >
-              <div class="bg-white p-8 w-1/3 mx-auto rounded shadow-lg">
+              <div
+                class="bg-white p-8 w-1/3 h-2/3 mx-auto rounded shadow-lg overflow-y-auto"
+              >
                 <h2 class="text-2xl font-semibold mb-4 text-center text-black">
                   Edit About Us
                 </h2>
