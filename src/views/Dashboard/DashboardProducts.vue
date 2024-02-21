@@ -466,7 +466,7 @@ export default {
         },
         color: '#000000',
         mainImage: '',
-        images: [],
+        images: null,
       },
       editProduct: {
         header: {
@@ -482,7 +482,7 @@ export default {
           french: '',
         },
         mainImage: '',
-        images: [],
+        images: null,
       },
     };
   },
@@ -643,7 +643,7 @@ export default {
           arabic: product.description.arabic,
           french: product.description.french,
         },
-        mainImage: product.mainImage,
+        mainImage: null,
         images: product.images,
       };
 
@@ -655,7 +655,7 @@ export default {
         await this.uploadEditFile();
       }
 
-      if (this.editProduct.images.length > 0) {
+      if (this.editProduct.images) {
         await this.uploadEditGallery();
       }
 
@@ -713,12 +713,13 @@ export default {
     },
     deleteImage(image) {
       this.loading = true;
-      ProductService.deleteImage(this.editProduct.id, image).then(
-        (response) => {
-          this.loading = false;
-          this.fetchProduct();
-        }
-      );
+      let body = {
+        image,
+      };
+      ProductService.deleteImage(this.editProduct.id, body).then((response) => {
+        this.loading = false;
+        this.fetchProduct();
+      });
     },
   },
 };

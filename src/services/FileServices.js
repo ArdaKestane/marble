@@ -13,7 +13,16 @@ const fileService = {
     }
 
     const formData = new FormData();
-    formData.append('files', files);
+
+    console.log(files);
+    if (files instanceof File) {
+      formData.append('files', files);
+    } else {
+      Array.from(files).forEach((file) => {
+        console.log(file);
+        formData.append('files', file);
+      });
+    }
     return axios.post(`${baseURL}/File/upload`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
