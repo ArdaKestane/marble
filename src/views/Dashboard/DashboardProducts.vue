@@ -713,13 +713,12 @@ export default {
     },
     deleteImage(image) {
       this.loading = true;
-      let body = {
-        image,
-      };
-      ProductService.deleteImage(this.editProduct.id, body).then((response) => {
-        this.loading = false;
-        this.fetchProduct();
-      });
+      ProductService.deleteImage(this.editProduct.id, image).then(
+        (response) => {
+          this.loading = false;
+          this.fetchProduct();
+        }
+      );
     },
   },
 };

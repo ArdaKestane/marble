@@ -45,7 +45,6 @@ const productServices = {
 
       return Promise.reject(new Error('User not authenticated.'));
     }
-
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -110,7 +109,7 @@ const productServices = {
     }
   },
 
-  async deleteImage(id,  image) {
+  async deleteImage(id, image) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -124,14 +123,13 @@ const productServices = {
       'Content-Type': 'application/json',
     };
 
+    console.log('hedaers: ', headers);
+
     try {
-      const response = await axios.delete(
-        `${baseURL}deleteImage/${id}`,
-        { params: { id: id,  image:  image } },
-        {
-          headers,
-        }
-      );
+      const response = await axios.delete(`${baseURL}deleteImage/${id}`, {
+        headers,
+        params: { id: id, image: image },
+      });
 
       return response.data;
     } catch (error) {
