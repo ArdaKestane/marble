@@ -436,7 +436,7 @@ export default {
         headerText: { ...aboutUs.headerText },
         description: { ...aboutUs.description },
         color: aboutUs.color,
-        image: aboutUs.image,
+        image: null,
       };
       this.editModalVisible = true;
     },

@@ -40,6 +40,8 @@ const timelineService = {
   addTimeline(body, selectedTimelineIndex) {
     const token = localStorage.getItem('token');
 
+    console.log('selectedTimelineIndex', selectedTimelineIndex);
+
     if (!token) {
       console.error('Token not found. User is not authenticated.');
       return Promise.reject(new Error('User not authenticated.'));
@@ -50,7 +52,11 @@ const timelineService = {
       'Content-Type': 'application/json',
     };
 
-    if (selectedTimelineIndex === '0') {
+    if (
+      selectedTimelineIndex === '0' ||
+      selectedTimelineIndex === undefined ||
+      selectedTimelineIndex === null
+    ) {
       return axios.post(`${baseURL}/Timeline/addTimelineLastPosition`, body, {
         headers,
       });
