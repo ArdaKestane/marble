@@ -673,7 +673,7 @@ export default {
           french: this.editProduct.description.french,
         },
         mainImage: this.editProduct.mainImage,
-        images: this.editProduct.images,
+
       };
 
       this.loading = true;
