@@ -4,15 +4,13 @@
       class="flex h-screen bg-white border-r border-gray-300 rounded-3xl shadow-md flex flex-col items-center p-4"
     >
       <nav>
-        <ul
-          class="flex flex-col items-center justify-center text-center space-y-4"
-        >
+        <ul class="flex flex-col items-center justify-center text-center">
           <li class="mb-2">
             <router-link
               to="/dashboard-header"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <Handshake :size="40" fillColor="#57534F" />
+              <Handshake :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -28,7 +26,7 @@
               to="/dashboard-home"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <ChatQuestionOutline :size="40" fillColor="#57534F" />
+              <ChatQuestionOutline :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -44,7 +42,7 @@
               to="/dashboard-about-us"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AccountMultiple :size="40" fillColor="#57534F" />
+              <AccountMultiple :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -61,7 +59,7 @@
               to="/dashboard-active-bar"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AlignVerticalDistribute :size="40" fillColor="#57534F" />
+              <AlignVerticalDistribute :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -79,7 +77,7 @@
               to="/dashboard-top-products"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <FileDocument :size="40" fillColor="#57534F" />
+              <FileDocument :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -97,7 +95,7 @@
               to="/dashboard-products"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <Ticket :size="40" fillColor="#57534F" />
+              <Ticket :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -114,7 +112,7 @@
               to="/dashboard-timeline"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <ClockTimeFive :size="40" fillColor="#57534F" />
+              <ClockTimeFive :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -131,7 +129,7 @@
               to="/dashboard-footer"
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
             >
-              <AccountGroup :size="40" fillColor="#57534F" />
+              <AccountGroup :size="32" fillColor="#57534F" />
               <p
                 class="font-semibold"
                 :class="{
@@ -147,7 +145,7 @@
               class="flex flex-col items-center p-3 rounded transition duration-300 text-gray-600"
               @click="logout"
             >
-              <LogoutVariant :size="40" fillColor="red" />
+              <LogoutVariant :size="32" fillColor="red" />
               <p class="font-bold text-red-500">Çıkış Yap</p>
             </button>
           </li>

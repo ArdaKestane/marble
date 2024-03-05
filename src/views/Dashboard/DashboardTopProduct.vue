@@ -8,7 +8,7 @@
   <div>
     <NavigationDrawer />
     <div class="flex justify-center py-24 h-screen bg-gray-100">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
           <div class="flex justify-between items-center">
             <h1 class="text-2xl font-semibold mb-4 text-center text-black">
