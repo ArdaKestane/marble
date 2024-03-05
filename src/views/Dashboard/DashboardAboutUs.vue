@@ -285,9 +285,17 @@ export default {
     },
 
     async uploadFile() {
-      await FileService.upload(this.editAboutUs.image).then((response) => {
-        this.editAboutUs.image = response.data[0];
-      });
+      await FileService.upload(this.editAboutUs.image)
+        .then((response) => {
+          this.editAboutUs.image = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/');
+          }
+        });
     },
 
     editAboutUsMethod(aboutUs) {
@@ -318,11 +326,19 @@ export default {
         image: this.editAboutUs.image,
       };
 
-      AboutUsService.editAboutUs(body).then((response) => {
-        this.loadingAboutUs = false;
-        this.editModalVisible = false;
-        this.fetchAboutUs();
-      });
+      AboutUsService.editAboutUs(body)
+        .then((response) => {
+          this.loadingAboutUs = false;
+          this.editModalVisible = false;
+          this.fetchAboutUs();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelEditAboutUs() {

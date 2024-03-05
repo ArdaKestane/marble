@@ -585,29 +585,37 @@ export default {
         companyPhoneNumber: this.editedCompanyPhoneNumber,
       };
 
-      FooterServices.updateInformation(body).then((response) => {
-        this.loading = false;
-        this.editCompanyInfoModalVisible = false;
-        this.newLocation = {
-          name: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          address: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          phone: '',
-          email: '',
-          x: 0,
-          y: 0,
-        };
-        this.fetchLocations();
-      });
+      FooterServices.updateInformation(body)
+        .then((response) => {
+          this.loading = false;
+          this.editCompanyInfoModalVisible = false;
+          this.newLocation = {
+            name: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            address: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            phone: '',
+            email: '',
+            x: 0,
+            y: 0,
+          };
+          this.fetchLocations();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
     async fetchLocations() {
       try {
@@ -619,16 +627,16 @@ export default {
         this.loading = false;
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
 
     openAddModal() {
       this.addModalVisible = true;
     },
-
-    handleAddLocationFileChange(event) {},
-
-    editCompanyInfo() {},
 
     async addLocation() {
       let body = {
@@ -640,29 +648,37 @@ export default {
         y: this.newLocation.y,
       };
 
-      FooterServices.addLocation(body).then((response) => {
-        this.loading = false;
-        this.addModalVisible = false;
-        this.newLocation = {
-          name: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          address: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          phone: '',
-          email: '',
-          x: 0,
-          y: 0,
-        };
-        this.fetchLocations();
-      });
+      FooterServices.addLocation(body)
+        .then((response) => {
+          this.loading = false;
+          this.addModalVisible = false;
+          this.newLocation = {
+            name: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            address: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            phone: '',
+            email: '',
+            x: 0,
+            y: 0,
+          };
+          this.fetchLocations();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelAddLocation() {
@@ -698,30 +714,38 @@ export default {
         y: this.editLocation.y,
       };
 
-      FooterServices.updateInformation(body).then((response) => {
-        this.loading = false;
-        this.editLocation = {
-          id: null,
-          name: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          address: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          phone: '',
-          email: '',
-          x: 0,
-          y: 0,
-        };
-        this.editModalVisible = false;
-        this.fetchLocations();
-      });
+      FooterServices.updateInformation(body)
+        .then((response) => {
+          this.loading = false;
+          this.editLocation = {
+            id: null,
+            name: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            address: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            phone: '',
+            email: '',
+            x: 0,
+            y: 0,
+          };
+          this.editModalVisible = false;
+          this.fetchLocations();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelEditLocation() {
@@ -754,6 +778,10 @@ export default {
           this.fetchLocations();
         } catch (error) {
           console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
         }
       }
     },

@@ -168,6 +168,10 @@ export default {
         this.loading = false;
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
 
@@ -185,9 +189,17 @@ export default {
     },
 
     async uploadFile() {
-      await FileService.upload(this.editHeader.image).then((response) => {
-        this.editHeader.image = response.data[0];
-      });
+      await FileService.upload(this.editHeader.image)
+        .then((response) => {
+          this.editHeader.image = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     async saveHeader() {
@@ -200,16 +212,24 @@ export default {
         image: this.editHeader.image,
       };
       this.loading = true;
-      HeaderService.editHeader(body).then((response) => {
-        this.editHeader = {
-          headerText: '',
-          color: '#000000',
-          image: null,
-        };
-        this.editModalVisible = false;
-        this.loading = false;
-        this.fetchHeader();
-      });
+      HeaderService.editHeader(body)
+        .then((response) => {
+          this.editHeader = {
+            headerText: '',
+            color: '#000000',
+            image: null,
+          };
+          this.editModalVisible = false;
+          this.loading = false;
+          this.fetchHeader();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelEdit() {

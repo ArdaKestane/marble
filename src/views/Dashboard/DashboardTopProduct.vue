@@ -84,13 +84,25 @@ export default {
         console.log(this.products);
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
     toggleSelection(productId, isSelected) {
       this.loading = true;
-      ProductService.updateIsTopProduct(productId, isSelected).then(() => {
-        this.loading = false;
-      });
+      ProductService.updateIsTopProduct(productId, isSelected)
+        .then(() => {
+          this.loading = false;
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
   },
 };

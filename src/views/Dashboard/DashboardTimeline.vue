@@ -495,13 +495,25 @@ export default {
         this.loading = false;
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
 
     async uploadFile() {
-      await FileService.upload(this.newTimeline.image).then((response) => {
-        this.newTimeline.image = response.data[0];
-      });
+      await FileService.upload(this.newTimeline.image)
+        .then((response) => {
+          this.newTimeline.image = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     openAddModal() {
@@ -541,6 +553,10 @@ export default {
         this.fetchTimeline();
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       } finally {
         this.loading = false;
         this.newTimeline = {
@@ -609,9 +625,17 @@ export default {
     },
 
     async uploadEditFile() {
-      await FileService.upload(this.editTimeline.image).then((response) => {
-        this.editTimeline.image = response.data[0];
-      });
+      await FileService.upload(this.editTimeline.image)
+        .then((response) => {
+          this.editTimeline.image = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     async saveTimeline() {
@@ -637,13 +661,19 @@ export default {
         image: this.editTimeline.image,
       };
       this.loading = true;
-      TimelineService.updateTimeline(this.editTimeline.id, body).then(
-        (response) => {
+      TimelineService.updateTimeline(this.editTimeline.id, body)
+        .then((response) => {
           this.loading = false;
           this.editModalVisible = false;
           this.fetchTimeline();
-        }
-      );
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelEdit() {
@@ -672,6 +702,10 @@ export default {
         this.fetchTimeline();
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       } finally {
         this.loading = false;
       }

@@ -507,6 +507,10 @@ export default {
         this.loading = false;
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
 
@@ -518,6 +522,10 @@ export default {
         this.fetchProduct();
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
 
@@ -530,9 +538,17 @@ export default {
     },
 
     async uploadNewFile() {
-      await FileService.upload(this.newProduct.mainImage).then((response) => {
-        this.newProduct.mainImage = response.data[0];
-      });
+      await FileService.upload(this.newProduct.mainImage)
+        .then((response) => {
+          this.newProduct.mainImage = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     handleEditFileChange(event) {
@@ -540,9 +556,17 @@ export default {
     },
 
     async uploadEditFile() {
-      await FileService.upload(this.editProduct.mainImage).then((response) => {
-        this.editProduct.mainImage = response.data[0];
-      });
+      await FileService.upload(this.editProduct.mainImage)
+        .then((response) => {
+          this.editProduct.mainImage = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     handleAddGalleryChange(event) {
@@ -550,9 +574,17 @@ export default {
     },
 
     async uploadNewGallery() {
-      await FileService.upload(this.newProduct.images).then((response) => {
-        this.newProduct.images = response.data;
-      });
+      await FileService.upload(this.newProduct.images)
+        .then((response) => {
+          this.newProduct.images = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     handleGalleryFileChange(event) {
@@ -561,9 +593,17 @@ export default {
     },
 
     async uploadEditGallery() {
-      await FileService.upload(this.imagesToAdd).then((response) => {
-        this.imagesToAdd = response.data;
-      });
+      await FileService.upload(this.imagesToAdd)
+        .then((response) => {
+          this.imagesToAdd = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     async addProduct() {
@@ -594,27 +634,35 @@ export default {
 
       this.loading = true;
       this.addModalVisible = false;
-      ProductService.createProduct(body).then((response) => {
-        this.newProduct = {
-          header: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          description: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          mainImage: '',
-          images: [],
-        };
-        this.loading = false;
+      ProductService.createProduct(body)
+        .then((response) => {
+          this.newProduct = {
+            header: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            description: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            mainImage: '',
+            images: [],
+          };
+          this.loading = false;
 
-        this.fetchProduct();
-      });
+          this.fetchProduct();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelAdd() {
@@ -681,13 +729,19 @@ export default {
       };
 
       this.loading = true;
-      ProductService.updateProduct(this.editProduct.id, body).then(
-        (response) => {
+      ProductService.updateProduct(this.editProduct.id, body)
+        .then((response) => {
           this.loading = false;
           this.editModalVisible = false;
           this.fetchProduct();
-        }
-      );
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelEdit() {
@@ -717,16 +771,26 @@ export default {
         this.fetchProduct();
       } catch (error) {
         console.error('Error inserting images:', error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
     deleteImage(image) {
       this.loading = true;
-      ProductService.deleteImage(this.editProduct.id, image).then(
-        (response) => {
+      ProductService.deleteImage(this.editProduct.id, image)
+        .then((response) => {
           this.loading = false;
           this.fetchProduct();
-        }
-      );
+        })
+        .catch((error) => {
+          console.error('Error deleting image:', error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
   },
 };

@@ -343,19 +343,39 @@ export default {
         this.loading = false;
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
       }
     },
 
     async uploadNewFile() {
-      await FileService.upload(this.newCarousel.image).then((response) => {
-        this.newCarousel.image = response.data[0];
-      });
+      await FileService.upload(this.newCarousel.image)
+        .then((response) => {
+          this.newCarousel.image = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     async uploadEditFile() {
-      await FileService.upload(this.editCarousel.image).then((response) => {
-        this.editCarousel.image = response.data[0];
-      });
+      await FileService.upload(this.editCarousel.image)
+        .then((response) => {
+          this.editCarousel.image = response.data[0];
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     openAddModal() {
@@ -382,21 +402,29 @@ export default {
         image: this.newCarousel.image,
       };
 
-      HomeService.postItem(body).then((response) => {
-        this.loading = false;
-        this.addModalVisible = false;
-        this.newCarousel = {
-          header: {
-            turkish: '',
-            english: '',
-            arabic: '',
-            french: '',
-          },
-          color: '#000000',
-          image: null,
-        };
-        this.fetchCarousel();
-      });
+      HomeService.postItem(body)
+        .then((response) => {
+          this.loading = false;
+          this.addModalVisible = false;
+          this.newCarousel = {
+            header: {
+              turkish: '',
+              english: '',
+              arabic: '',
+              french: '',
+            },
+            color: '#000000',
+            image: null,
+          };
+          this.fetchCarousel();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelAdd() {
@@ -430,10 +458,18 @@ export default {
     },
     deleteCarousel(id) {
       this.loading = true;
-      HomeService.deleteItem(id).then((response) => {
-        this.loading = false;
-        this.fetchCarousel();
-      });
+      HomeService.deleteItem(id)
+        .then((response) => {
+          this.loading = false;
+          this.fetchCarousel();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
     handleFileChange(event) {
       this.editCarousel.image = event.target.files[0];
@@ -455,11 +491,19 @@ export default {
         image: this.editCarousel.image,
       };
 
-      HomeService.putItem(this.editCarousel.id, body).then((response) => {
-        this.loading = false;
-        this.editModalVisible = false;
-        this.fetchCarousel();
-      });
+      HomeService.putItem(this.editCarousel.id, body)
+        .then((response) => {
+          this.loading = false;
+          this.editModalVisible = false;
+          this.fetchCarousel();
+        })
+        .catch((error) => {
+          console.error(error);
+          if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            this.$router.push('/login');
+          }
+        });
     },
 
     cancelEdit() {

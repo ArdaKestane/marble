@@ -205,6 +205,10 @@ export default {
         this.fetchActiveBar();
       } catch (error) {
         console.error(error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          this.$router.push('/login');
+        }
         this.loading = false;
       }
     },
