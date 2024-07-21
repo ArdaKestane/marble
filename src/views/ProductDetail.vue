@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="loading"
-    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+    class="fixed inset-0 flex justify-center items-center bg-mainDark opacity-50 z-10"
   >
     <Loading />
   </div>
@@ -10,7 +10,7 @@
 
     <div class="bg-[#57534F] flex flex-col items-center">
       <img
-        :src=" product.mainImage"
+        :src="product.mainImage"
         :alt="product.header[selectedLanguage]"
         class="object-cover w-full h-[38vh] mb-8 cursor-pointer"
         style="object-fit: cover"
@@ -60,7 +60,7 @@
             @click="openLightbox(item)"
           >
             <img
-              :src=" item"
+              :src="item"
               :alt="'Gallery ' + (index + 1)"
               class="w-full h-64 object-cover"
             />
@@ -70,11 +70,11 @@
 
       <div
         v-if="lightboxOpen"
-        class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75 z-50"
+        class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-mainDark bg-opacity-75 z-50"
         @click="closeLightbox"
       >
         <img
-          :src=" selectedImage"
+          :src="selectedImage"
           alt="Enlarged"
           class="object-cover w-[60vw] h-[40vh]"
         />

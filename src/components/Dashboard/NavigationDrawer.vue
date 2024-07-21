@@ -1,7 +1,7 @@
 <template>
   <nav class="absolute left-0 flex h-full">
     <div
-      class="flex h-screen bg-white border-r border-gray-300 rounded-3xl shadow-md flex flex-col items-center p-4"
+      class="flex h-screen bg-fourthLight border-r border-gray-300 rounded-3xl shadow-md flex flex-col items-center p-4"
     >
       <nav>
         <ul class="flex flex-col items-center justify-center text-center">

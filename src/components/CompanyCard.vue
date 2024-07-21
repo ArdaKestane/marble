@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="loading"
-    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+    class="fixed inset-0 flex justify-center items-center bg-mainDark opacity-50 z-10"
   >
     <Loading />
   </div>
@@ -16,9 +16,13 @@
           />
           <div
             :style="{ color: item.color }"
-            class="absolute inset-0 flex items-center justify-center text-center text-dark whitespace-normal text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-serif font-light"
+            class="absolute inset-0 flex items-center sm:items-end justify-center sm:justify-start text-center text-dark whitespace-normal text-slide-in"
           >
-            {{ item.header[selectedLanguage] }}
+            <p
+              class="px-8 py-4 rounded-xl bg-black opacity-75 transform -translate-y-0 sm:-translate-y-full ml-0 sm:ml-4 text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif font-light italic"
+            >
+              {{ item.header[selectedLanguage] }}
+            </p>
           </div>
         </div>
       </slide>
@@ -73,5 +77,18 @@ export default {
 </script>
 
 <style scoped>
-/* Add or modify styles as needed */
+@keyframes slide-in-from-left {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.text-slide-in {
+  animation: slide-in-from-left 1.25s ease-out;
+}
 </style>

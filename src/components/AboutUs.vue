@@ -1,24 +1,24 @@
 <template>
   <div
     v-if="loading"
-    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+    class="fixed inset-0 flex justify-center items-center bg-mainDark opacity-50 z-10"
   >
     <Loading />
   </div>
   <div
-    class="flex py-10 px-10 flex-col sm:flex-col md:flex-col lg:flex-col xl:flex-row align-center justify-center"
+    class="flex py-10 px-10 flex-col sm:flex-col md:flex-col lg:flex-col xl:flex-row align-center justify-center bg-mainLight"
   >
     <div
       class="flex items-center justify-center w-full sm:w-full md:w-full lg:w-full xl:w-1/2 xl:mr-5"
     >
       <img
-        :src=" image"
+        :src="image"
         alt="aboutus"
-        class="w-2/5 md:w-2/5 sm:w-2/5 lg:w-3/4 xl:w-2/3"
+        class="w-4/5 md:w-2/5 sm:w-2/5 lg:w-3/4 xl:w-2/3"
       />
     </div>
     <div
-      class="flex flex-col m-5 md:w-full lg:w-full xl:w-1/2 xl:text-left lg:text-center md:text-center sm:text-center"
+      class="flex flex-col m-5 md:w-full lg:w-full xl:w-1/2 xl:text-left lg:text-center md:text-center sm:text-center text-center"
     >
       <h2
         class="text-black text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4"
@@ -43,7 +43,7 @@ export default {
     return {
       loading: true,
       selectedLanguage: localStorage.getItem('selectedLanguage'),
-       image: null,
+      image: null,
       headerText: {
         turkish: '',
         english: '',
@@ -83,7 +83,7 @@ export default {
         };
 
         this.loading = false;
-        console.log(this.image)
+        console.log(this.image);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

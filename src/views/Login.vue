@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center justify-center h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded shadow-md w-full sm:w-96">
+  <div class="flex items-center justify-center h-screen bg-secondaryLight">
+    <div class="bg-secondaryLight p-8 rounded shadow-md w-full sm:w-96">
       <h1 class="text-2xl font-semibold mb-4 text-center text-black">
         Admin Panel
       </h1>

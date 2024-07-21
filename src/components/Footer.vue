@@ -10,10 +10,10 @@
       <ContactUs class="w-1/2" />
     </div>
     <div
-      class="h-fit w-full py-4 flex items-center justify-center bg-opacity-30 bg-gray-200 relative"
+      class="h-fit w-full py-4 flex items-center justify-center bg-opacity-30 bg-mainLight relative"
     >
       <div
-        class="flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center justify-between space-x-0 sm:space-x-5 md:space-x-16 lg:space-x-48 xl:space-x-80"
+        class="flex flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row items-center justify-between space-x-0 sm:space-x-5 md:space-x-16 lg:space-x-24 xl:space-x-48"
       >
         <div class="text-center w-full text-black sm:w-auto mb-4 sm:mb-0">
           <p>{{ contactLabel }}</p>

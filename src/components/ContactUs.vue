@@ -117,7 +117,7 @@
     <div class="p-4 w-4/5 space-y-4">
       <button
         @click="sendEmail"
-        class="w-full bg-[#57534F] text-white font-bold py-2 px-4 rounded"
+        class="w-full bg-mainDark text-white font-bold py-2 px-4 rounded"
       >
         {{
           selectedLanguage === 'turkish'
@@ -134,7 +134,7 @@
     </div>
     <div
       v-if="successMessage"
-      class="top-center flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+      class="top-center flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-secondaryDark dark:text-green-400"
       role="alert"
     >
       <svg
@@ -156,7 +156,7 @@
 
     <div
       v-if="alertMessage"
-      class="top-center flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      class="top-center flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-secondaryDark dark:text-red-400"
       role="alert"
     >
       <svg

@@ -34,10 +34,10 @@
         <Menu :size="36" :style="{ color: headerColor, cursor: 'pointer' }" />
       </div>
     </div>
-    <transition name="fade">
+    <transition name="slide-fade" @before-enter="beforeEnter" @enter="enter">
       <div
         v-if="drawerOpen"
-        class="z-10 opacity-95 bg-repeat top-full right-0 left-0 z-1 h-24 flex items-center justify-between px-5 border-t-2 border-white"
+        class="drawer-content z-10 opacity-95 bg-repeat top-full right-0 left-0 z-1 h-24 flex items-center justify-between px-5 border-t-2 border-white"
       >
         <router-link
           to="/"
@@ -140,7 +140,6 @@ export default {
   mounted() {
     this.getHeader();
   },
-
   methods: {
     toggleDrawer() {
       this.drawerOpen = !this.drawerOpen;
@@ -166,8 +165,21 @@ export default {
       localStorage.setItem('selectedLanguage', language);
       window.location.reload();
     },
+    beforeEnter(el) {
+      el.style.transform = 'translateY(-100%)';
+    },
+    enter(el, done) {
+      el.offsetHeight;
+      el.style.transition = 'transform 0.5s ease-in-out';
+      el.style.transform = 'translateY(0)';
+      done();
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.drawer-content {
+  transform: translateY(-100%);
+}
+</style>

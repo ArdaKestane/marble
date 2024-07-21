@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="py-10">
+    <div class="pt-4 sm:pt-16 sm:pb-10">
       <ProductList />
     </div>
     <Footer />

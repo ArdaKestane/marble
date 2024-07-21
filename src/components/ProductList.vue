@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="loading"
-    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+    class="fixed inset-0 flex justify-center items-center bg-mainDark opacity-50 z-10"
   >
     <Loading />
   </div>
@@ -20,12 +20,12 @@
       @click="scrollToTop"
     >
       <img
-        :src=" product.mainImage"
+        :src="product.mainImage"
         :alt="product.header[selectedLanguage]"
         class="w-full h-64 object-cover xl:w-120 xl:h-64 lg:w-120 lg:h-64 md:w-120 md:h-64 sm:w-120 sm:h-64 sm:block lg:transition-transform lg:transform lg:origin-center lg:hover:scale-105 xl:transition-transform xl:transform xl:origin-center xl:hover:scale-105"
       />
       <div
-        class="absolute bottom-10 left-10 bg-neutral-600 bg-opacity-75 px-5 py-2 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+        class="absolute bottom-10 left-10 bg-secondaryLight bg-opacity-75 px-5 py-2 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
       >
         <div class="text-white text-center">
           <h1 class="text-md md:text-md lg:text-lg xl:text-xl font-semibold">

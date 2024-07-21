@@ -1,15 +1,15 @@
 <template>
   <div
     v-if="loading"
-    class="fixed inset-0 flex justify-center items-center bg-white opacity-50 z-10"
+    class="fixed inset-0 flex justify-center items-center bg-mainDark opacity-50 z-10"
   >
     <Loading />
   </div>
   <div>
     <NavigationDrawer />
-    <div class="flex justify-center py-24 h-screen bg-gray-100">
+    <div class="flex justify-center py-24 min-h-screen h-max bg-fourthLight">
       <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8">
+        <div class="bg-fourthLight overflow-hidden shadow-xl sm:rounded-lg p-8">
           <div class="flex justify-between items-center">
             <h1 class="text-2xl font-semibold mb-4 text-center text-black">
               Top Products
@@ -22,7 +22,7 @@
             <div
               v-for="product in products"
               :key="product.id"
-              class="bg-stone-400 flex flex-col relative overflow-hidden rounded-md sm:rounded-xl md:rounded-md lg:rounded-md xl:rounded-md"
+              class="bg-thirdLight flex flex-col relative overflow-hidden rounded-md sm:rounded-xl md:rounded-md lg:rounded-md xl:rounded-md"
             >
               <input
                 type="checkbox"
@@ -36,10 +36,12 @@
                 class="w-full h-64 object-cover xl:w-120 xl:h-64 lg:w-120 lg:h-64 sm:block lg:transition-transform lg:transform lg:origin-center lg:hover:scale-105 xl:transition-transform xl:transform xl:origin-center xl:hover:scale-105"
               />
               <div
-                class="xl:flex xl:flex-row xl:items-start xl:justify-start sm:flex sm:flex-col m-5 xl:hidden lg:hidden md:hidden"
+                class="xl:flex xl:flex-row xl:items-start xl:justify-start sm:flex sm:flex-col m-5 xl:hidden lg:hidden md:hidden text-mainDark"
               >
-                <h1 class="text-2xl">{{ product.name }}</h1>
-                <p class="text-xl">{{ product.description }}</p>
+                <h1 class="text-2xl">{{ product.header[selectedLanguage] }}</h1>
+                <p class="text-xl">
+                  {{ product.description[selectedLanguage] }}
+                </p>
               </div>
             </div>
           </div>
@@ -64,6 +66,7 @@ export default {
     return {
       loading: false,
       products: [],
+      selectedLanguage: localStorage.getItem('selectedLanguage'),
     };
   },
   mounted() {
